@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Board State</title>
+
+    <link rel="stylesheet" href="../vendors/bootstrap.min.css" media="screen" title="no title">
+    <link rel="stylesheet" href="../css/style.css" media="screen" title="no title">
+  </head>
+  <body>
+
+    <div ng-controller="createCardController">
+
+      <input type="text" ng-model="newCardModel" placeholder="Create a new card">
+      <button ng-click="createNewCard()">Create</button>
+
+      <div class="gameBoard">
+
+        <div
+        class="createdCard"
+        ng-repeat="card in createdCardArray"
+        ng-style="card.style"
+        draggable
+        ng-dblclick="tapCard(card)"
+        ng-class="{'tapped': card.tapped}"
+        >
+          <button class="removeCard" ng-click="removeCard($index)"><strong>X</strong></button>
+          <span class="powerToughness">{{card.powerToughness}}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <script src="../vendors/angular.min.js" charset="utf-8"></script>
+    <script src="../scripts/script.js" charset="utf-8"></script>
+  </body>
+</html>
