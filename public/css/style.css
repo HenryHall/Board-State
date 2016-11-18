@@ -33,6 +33,37 @@
   background-color: rgb(221, 221, 221);
   border-radius: 5px;
   position: relative;
-  top: 85%;
+  top: 75%;
   right: 5%;
+  padding: 2px;
+}
+
+.customContextMenu {
+  position: absolute;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(59, 59, 59);
+  border-radius: 3px;
+  box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
+  width: auto;
+}
+
+.customContextMenu ul {
+  list-style: none;
+  padding: 15px;
+}
+
+.customContextMenu ul li {
+  border-bottom: 2px solid rgb(210, 210, 210);
+}
+
+.customContextMenu ul li:last-child {
+  border-bottom: none;
+}
+
+.customContextMenu ul li:hover {
+  background-color: rgb(199, 199, 199);
+}
+
+.inspecting {
+  transform: scale(3);
 }

@@ -23,6 +23,7 @@
         draggable
         ng-dblclick="tapCard(card)"
         ng-class="{'tapped': card.tapped}"
+        ng-right-click
         >
           <button class="removeCard" ng-click="removeCard($index)"><strong>X</strong></button>
           <span class="powerToughness">{{card.powerToughness}}</span>
