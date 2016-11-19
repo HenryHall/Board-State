@@ -5,6 +5,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
   $scope.allSets = {};
   $scope.createdCardArray = [];
+  $scope.uniqueID = 0;
 
   $http({
     method: 'GET',
@@ -37,7 +38,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   function createNewCardElement(cardInfo){
     var newCard = {};
 
-    // newCard.uniqueID =
+    newCard.uniqueID = $scope.uniqueID++;
     newCard.info = cardInfo;
 
     newCard.style = {
@@ -45,7 +46,8 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
       "background-size": "cover",
       "background-color": "trasnparent",
       height: '155px',
-      width: '111px'
+      width: '111px',
+      // 'z-index': 0
     };
 
     if(cardInfo.types.indexOf("Creature") != -1) {
@@ -61,6 +63,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     $scope.createdCardArray.push(newCard);
     console.log($scope.createdCardArray);
 
+    return newCard;
   }//End createNewCardElement
 
 
@@ -74,8 +77,12 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   };
 
 
-  $scope.inspectCard = function(index){
-    // $scope.createdCardArray[index].inspecting = true;
+  $scope.inspectCard = function($event){
+    var currentCard = angular.element($event.target).parent().parent().parent();
+    currentCard.addClass('inspecting');
+    currentCard.on('mouseleave', function(){
+      currentCard.removeClass('inspecting');
+    });
   };
 
 
@@ -87,7 +94,28 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     } else {
       $scope.createdCardArray[index].powerToughness = newPT;
     }
+  };
 
+
+  $scope.moveCardUp = function(index){
+    if(!$scope.createdCardArray[index].style['z-index']){
+      $scope.createdCardArray[index].style['z-index'] = 0;
+    }
+    $scope.createdCardArray[index].style['z-index']++;
+  };
+
+
+  $scope.moveCardDown = function(index){
+    if(!$scope.createdCardArray[index].style['z-index']){
+      $scope.createdCardArray[index].style['z-index'] = 0;
+    }
+    $scope.createdCardArray[index].style['z-index']--;
+  };
+
+
+  $scope.duplicateCard = function(index){
+    var newCard = createNewCardElement($scope.createdCardArray[index].info);
+    newCard.powerToughness = $scope.createdCardArray[index].powerToughness;
   };
 
 
@@ -96,13 +124,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   return {
     restrict: 'C',
     link: function(scope, element, attrs){
-      console.log(element);
-      element.on('mouseleave', function(){
-        element.removeClass('inspecting');
-      });
-      element.on('click', function(){
-        element.removeClass('inspecting');
-      });
+
     }
   }
 })
@@ -117,6 +139,14 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
       element.on('click', function(){
         element.remove();
       });
+      if(element.parent().hasClass('tapped')){
+        element.css({
+          transform: "rotate(-90deg)",
+          top: '-20px',
+          left: '75px',
+          'z-index': 1000
+        });
+      }
     }
   }
 })

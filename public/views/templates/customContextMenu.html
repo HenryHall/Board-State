@@ -1,28 +1,26 @@
 <ul
 id="customContextMenu"
-ng-mouseleave="removeContextMenu($event)"
->
+ng-mouseleave="removeContextMenu($event)">
+
   <li
-  ng-click="inspectCard($index)"
-  >
+  ng-click="inspectCard($event)">
   Inspect</li>
 
   <li
   ng-if="card.info.types.indexOf('Creature') != -1"
-  ng-click="setPT($index)"
-  >
+  ng-click="setPT($index)">
   Set Power/Toughness</li>
 
   <li
-  ng-click=""
-  >
+  ng-click="moveCardUp($index)">
   Move Up</li>
 
   <li
-  ng-click=""
-  >
+  ng-click="moveCardDown($index)">
   Move Down</li>
 
-  <li>Duplicate</li>
+  <li
+  ng-click="duplicateCard($index)">
+  Duplicate</li>
 
 </ul>
