@@ -1,9 +1,26 @@
 
+#ui-panel {
+  background-color: rgb(234,234,234);
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+}
+
+#crabMediaLogo {
+  height: 75px;
+}
+
+#gameBoard {
+  padding: 20px;
+  height: 90vh;
+}
+
 .createdCard {
   border-radius: 10px;
   position: absolute;
   padding-top: 50px;
   transition: transform .5s
+
 }
 
 .createdCard:hover {
@@ -38,6 +55,35 @@
   padding: 2px;
 }
 
+.createdCard .loyalty {
+  background-color: rgb(221, 221, 221);
+  display: inline-block;
+  height: 15px;
+  position: relative;
+  width: 25px;
+  top: 79%;
+  left: 74%;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  text-align: center;
+}
+
+.createdCard .loyalty:before {
+  border-bottom: 5px solid rgb(221, 221, 221);
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  content: "";
+  height: 0;
+  left: 0;
+  position: absolute;
+  top: 15px;
+  width: 0;
+  transform: rotate(180deg);
+}
+
+
+
+
 .customContextMenu {
   position: absolute;
   background-color: rgb(221, 221, 221);
@@ -45,6 +91,7 @@
   border-radius: 3px;
   box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
   width: auto;
+  z-index: 2000;
 }
 
 .customContextMenu ul {

@@ -4,17 +4,20 @@
     <meta charset="utf-8">
     <title>Board State</title>
 
-    <link rel="stylesheet" href="../vendors/bootstrap.min.css" media="screen" title="no title">
+    <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css" media="screen" title="no title">
     <link rel="stylesheet" href="../css/style.css" media="screen" title="no title">
   </head>
+
+
   <body>
 
     <div ng-controller="createCardController">
 
-      <input type="text" ng-model="newCardModel" placeholder="Create a new card">
-      <button ng-click="createNewCard()">Create</button>
+      <div>
+        <ui-panel />
+      </div>
 
-      <div class="gameBoard">
+      <div id="gameBoard">
 
         <div
         class="createdCard"
@@ -25,8 +28,10 @@
         ng-class="{'tapped': card.tapped}"
         ng-right-click
         >
-          <button class="removeCard" ng-click="removeCard($index)"><strong>X</strong></button>
-          <span class="powerToughness">{{card.powerToughness}}</span>
+          <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
+          <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
+          <span ng-if="card.loyalty" class="loyalty">{{card.loyalty}}</span>
+
         </div>
 
       </div>

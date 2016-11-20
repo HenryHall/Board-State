@@ -12,6 +12,16 @@ ng-mouseleave="removeContextMenu($event)">
   Set Power/Toughness</li>
 
   <li
+  ng-if="card.info.types.indexOf('Planeswalker') != -1"
+  ng-click="setLoyalty($index)">
+  Set Loyalty</li>
+
+  <li
+  ng-if="card.info.layout == 'double-faced'"
+  ng-click="flipDFCard($index)">
+  Transform</li>
+
+  <li
   ng-click="moveCardUp($index)">
   Move Up</li>
 
