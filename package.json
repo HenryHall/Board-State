@@ -1,12 +1,24 @@
 {
   "name": "boardstate",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server/app.js"
   },
   "author": "Henry Hall",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HenryHall/Board-State.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HenryHall/Board-State/issues"
+  },
+  "homepage": "https://github.com/HenryHall/Board-State#readme",
+  "description": ""
 }
