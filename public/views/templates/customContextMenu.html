@@ -18,7 +18,7 @@ ng-mouseleave="removeContextMenu($event)">
 
   <li
   ng-if="card.info.layout == 'double-faced'"
-  ng-click="flipDFCard($index)">
+  ng-click="flipDFCard($index, $event)">
   Transform</li>
 
   <li

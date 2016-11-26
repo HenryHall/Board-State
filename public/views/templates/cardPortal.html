@@ -1,0 +1,33 @@
+
+  <div id="cardPortal" class="container" draggable>
+
+    <div class="row">
+
+      <h3>Card Portal</h3>
+
+      <form ng-submit="createNewCard()">
+        <div class="input-group">
+
+          <input
+          class="form-control"
+          type="text"
+          ng-model="newCardModel"
+          placeholder="New Card"
+          autofocus
+          >
+
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></button>
+            <button class="btn btn-default" ng-click="clearInput()">
+              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+            </button>
+          </span>
+
+        </div>
+      </form>
+
+    </div>
+
+
+
+  </div>

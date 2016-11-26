@@ -1,0 +1,48 @@
+<div id="gameStats">
+
+  <div id="opponent">
+    <div class="gameStatsMenuItem">
+      Library
+    </div>
+    <div class="gameStatsMenuItem">
+      Hand
+    </div>
+    <div class="gameStatsMenuItem">
+      Graveyard
+    </div>
+    <div class="gameStatsMenuItem">
+      Exile
+    </div>
+
+    <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
+      {{gameStats.opponent.life}}
+    </div>
+  </div>
+
+  <img src="./images/crab-02.svg" alt="Crab Digital Media" />
+
+  <div class="gameStatsMenuItem">
+    Menu
+  </div>
+
+
+<div id="self">
+  <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
+    {{gameStats.self.life}}
+  </div>
+
+  <div class="gameStatsMenuItem">
+    Library
+  </div>
+  <div class="gameStatsMenuItem">
+    Hand
+  </div>
+  <div class="gameStatsMenuItem">
+    Graveyard
+  </div>
+  <div class="gameStatsMenuItem">
+    Exile
+  </div>
+</div>
+
+</div>

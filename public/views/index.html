@@ -13,25 +13,41 @@
 
     <div ng-controller="createCardController">
 
-      <div>
-        <ui-panel />
-      </div>
-
-      <div id="gameBoard">
+      <div id="gameBoard" ng-style="gameBoardStyle" draggable>
 
         <div
         class="createdCard"
         ng-repeat="card in createdCardArray"
         ng-style="card.style"
-        draggable
+        carddraggable
         ng-dblclick="tapCard(card)"
         ng-class="{'tapped': card.tapped}"
-        ng-right-click
+        contextmenurightclick
         >
           <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
           <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
           <span ng-if="card.loyalty" class="loyalty">{{card.loyalty}}</span>
+        </div>
 
+        <div id="gameBoardOpponent"></div>
+        <div id="gameBoardOurs"></div>
+
+      </div>
+
+      <div>
+        <game-board-ui />
+      </div>
+
+      <!-- <div id="uiElements" ng-if="!ui.hidden"> -->
+      <div id="uiElements">
+
+
+        <div>
+          <card-portal />
+        </div>
+
+        <div>
+          <game-stats />
         </div>
 
       </div>
