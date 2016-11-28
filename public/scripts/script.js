@@ -7,8 +7,10 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   $scope.allSets = {};
   $scope.createdCardArray = [];
   $scope.uniqueID = 0;
-  $scope.ui = {};
-  $scope.ui.hidden = false;
+  $scope.ui = {
+    all: false,
+    description: false
+  };
   $scope.zoom = currentZoom * 100;
   $scope.gameBoardStyle = {
     transform: 'scale(' + currentZoom + ')'
@@ -28,7 +30,8 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
       graveyard: [],
       exile: [],
       library: []
-    }
+    },
+    description: ""
   };
 
   $http({
@@ -48,7 +51,16 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
   $scope.toggleUI = function(){
     console.log("toggle");
-    $scope.ui.hidden = !$scope.ui.hidden;
+    $scope.ui.all = !$scope.ui.all;
+  };
+
+
+  $scope.toggleDescription = function(){
+    if(document.getElementById('stateDescription').style.bottom == '0px'){
+      document.getElementById('stateDescription').style.bottom = '-40vh';
+    } else {
+      document.getElementById('stateDescription').style.bottom = '0px';
+    }
   };
 
 

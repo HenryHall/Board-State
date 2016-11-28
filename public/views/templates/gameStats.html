@@ -1,6 +1,11 @@
 <div id="gameStats">
 
-  <div id="opponent">
+  <section id="opponent">
+
+    <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
+      {{gameStats.opponent.life}}
+    </div>
+
     <div class="gameStatsMenuItem">
       Library
     </div>
@@ -14,35 +19,34 @@
       Exile
     </div>
 
-    <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
-      {{gameStats.opponent.life}}
-    </div>
-  </div>
+  </section>
 
-  <img src="./images/crab-02.svg" alt="Crab Digital Media" />
+  <!-- <section>
+    <img src="./images/crab-02.svg" alt="Crab Digital Media" />
+  </section> -->
 
-  <div class="gameStatsMenuItem">
+  <!-- <div class="gameStatsMenuItem">
     Menu
-  </div>
+  </div> -->
 
 
-<div id="self">
-  <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
-    {{gameStats.self.life}}
-  </div>
+  <section id="self">
+    <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
+      {{gameStats.self.life}}
+    </div>
 
-  <div class="gameStatsMenuItem">
-    Library
-  </div>
-  <div class="gameStatsMenuItem">
-    Hand
-  </div>
-  <div class="gameStatsMenuItem">
-    Graveyard
-  </div>
-  <div class="gameStatsMenuItem">
-    Exile
-  </div>
-</div>
+    <div class="gameStatsMenuItem">
+      Library
+    </div>
+    <div class="gameStatsMenuItem">
+      Hand
+    </div>
+    <div class="gameStatsMenuItem">
+      Graveyard
+    </div>
+    <div class="gameStatsMenuItem">
+      Exile
+    </div>
+  </section>
 
 </div>
