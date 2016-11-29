@@ -64,7 +64,25 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   };
 
 
-  $scope.createNewCard = function(key){
+  function findCard(cardName){
+    for(var i in $scope.allSets){
+      for(var j=0; j<$scope.allSets[i].cards.length; j++){
+        if($scope.allSets[i].cards[j].name.toLowerCase() == cardName.toLowerCase()){
+          //Check to see if the image can be loaded
+          if($scope.allSets[i].cards[j].multiverseid){
+            var foundCard = $scope.allSets[i].cards[j];
+            return foundCard;
+          } else {
+            console.log("No Image was found for this card, will continue looking.");
+          }
+        }
+      }
+    }
+    return undefined;
+  }
+
+
+  $scope.createNewCard = function(){
 
     console.log($scope.newCardModel);
 
@@ -73,20 +91,17 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
       return;
     }
 
-    for(var i in $scope.allSets){
-      for(var j=0; j<$scope.allSets[i].cards.length; j++){
-        if($scope.allSets[i].cards[j].name.toLowerCase() == $scope.newCardModel.toLowerCase()){
-          //Check to see if the image can be loaded
-          if($scope.allSets[i].cards[j].multiverseid){
-            console.log($scope.allSets[i].cards[j]);
-            return createNewCardElement($scope.allSets[i].cards[j]);
-          } else {
-            console.log("No Image was found for this card, will continue looking.");
-          }
-        }
-      }
+    var newCardInfo = findCard($scope.newCardModel);
+    console.log(newCardInfo);
+    if (newCardInfo == undefined){
+      console.log("No card with that name was found.");
+      return;
     }
-    return console.log("No card with that name found.");
+
+    var newCardElement = createNewCardElement(newCardInfo);
+    console.log(newCardElement);
+    $scope.createdCardArray.push(newCardElement);
+
   };
 
 
@@ -162,11 +177,6 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     }
 
     newCard.tapped = false;
-
-    //Add the newCard
-    $scope.createdCardArray.push(newCard);
-    console.log($scope.createdCardArray);
-
     return newCard;
   }//End createNewCardElement
 
@@ -303,6 +313,252 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   $scope.decrementOpponent = function(){
     $scope.gameStats.opponent.life--;
   };
+
+
+  $scope.viewZone = function(player, zone){
+    console.log("In viewZone with:", player, zone);
+    console.log(document.getElementById('otherZones').style.left);
+
+    // if (document.getElementById('otherZones').style.left == '-400px') {
+    //   console.log("Opening otherZones");
+    //   document.getElementById('otherZones').style.left = '150px';
+    // } else if (player == $scope.currentPlayer && zone == $scope.currentZone) {
+    //   document.getElementById('otherZones').style.left = '-400px';
+    //   return;
+    // }
+
+    if(player == $scope.currentPlayer && zone == $scope.currentZone || $scope.currentPlayer == undefined){
+      if (document.getElementById('otherZones').style.left == '150px'){
+        document.getElementById('otherZones').style.left = '-400px';
+        return;
+      } else {
+        document.getElementById('otherZones').style.left = '150px';
+      }
+    }
+
+    $scope.currentPlayer = player;
+    $scope.currentZone = zone;
+
+    if (player == "Opponents") {
+
+      switch (zone) {
+        case "Library":
+          $scope.currentZoneCards = $scope.gameStats.opponent.library;
+          break;
+
+        case "Hand":
+          $scope.currentZoneCards = $scope.gameStats.opponent.hand;
+          break;
+
+        case "Graveyard":
+          $scope.currentZoneCards = $scope.gameStats.opponent.graveyard;
+          break;
+
+        case "Exile":
+          $scope.currentZoneCards = $scope.gameStats.opponent.exile;
+          break;
+
+        default:
+          console.log("How the hell did you get here?");
+
+      }
+
+    } else if (player == "Our") {
+
+      switch (zone) {
+        case "Library":
+          $scope.currentZoneCards = $scope.gameStats.self.library;
+          break;
+
+        case "Hand":
+          $scope.currentZoneCards = $scope.gameStats.self.hand;
+          break;
+
+        case "Graveyard":
+          $scope.currentZoneCards = $scope.gameStats.self.graveyard;
+          break;
+
+        case "Exile":
+          $scope.currentZoneCards = $scope.gameStats.self.exile;
+          break;
+
+        default:
+          console.log("How the hell did you get here?");
+
+      }
+
+    }
+
+    //Position the array properly
+    if ($scope.currentZoneCards.length > 0){
+      positionCurrentZoneCards();
+    }
+
+  };
+
+
+  function positionCurrentZoneCards(){
+
+    var currentTop = document.getElementById('otherZonesCardArea').getBoundingClientRect().top;
+    var divBottom = document.getElementById('otherZones').getBoundingClientRect().bottom + 30;
+    var currentLeft = 10;
+
+    for (var i=0; i<$scope.currentZoneCards.length; i++){
+      $scope.currentZoneCards[i].style.top = currentTop + 'px';
+      $scope.currentZoneCards[i].style.left = currentLeft + 'px';
+
+      currentTop = currentTop + 25;
+      if ((currentTop + 200) > divBottom){
+        //create a new row
+        currentTop = document.getElementById('otherZonesCardArea').getBoundingClientRect().top;
+        currentLeft = currentLeft + 121;
+      }
+
+    }
+
+  }
+
+
+  $scope.createNewCurrentZone = function(){
+
+    //Make sure there is text to create a card
+    if($scope.newCurrentZoneCard == "" || $scope.newCurrentZoneCard == undefined){
+      return;
+    }
+
+    var newCardInfo = findCard($scope.newCurrentZoneCard);
+    var newCardElement = createNewCardElement(newCardInfo);
+
+    //add the card to the proper array
+    if ($scope.currentPlayer == "Opponents"){
+
+      switch ($scope.currentZone) {
+        case "Library":
+          $scope.gameStats.opponent.library.push(newCardElement);
+          break;
+
+        case "Hand":
+          $scope.gameStats.opponent.hand.push(newCardElement);
+          break;
+
+        case "Graveyard":
+          $scope.gameStats.opponent.graveyard.push(newCardElement);
+          break;
+
+        case "Exile":
+          $scope.gameStats.opponent.exile.push(newCardElement);
+          break;
+
+        default:
+          console.log("That is not a propper zone.");
+
+      }
+
+    } else if ($scope.currentPlayer == "Our"){
+
+      switch ($scope.currentZone) {
+        case "Library":
+          $scope.gameStats.self.library.push(newCardElement);
+          break;
+
+        case "Hand":
+          $scope.gameStats.self.hand.push(newCardElement);
+          break;
+
+        case "Graveyard":
+          $scope.gameStats.self.graveyard.push(newCardElement);
+          break;
+
+        case "Exile":
+          $scope.gameStats.self.exile.push(newCardElement);
+          break;
+
+        default:
+          console.log("That is not a propper zone.");
+
+      }
+
+    } else {
+      console.log("How the hell did you get here?");
+    }
+
+    positionCurrentZoneCards();
+
+  };
+
+
+  $scope.clearCurrentZoneInput = function(){
+    $scope.newCurrentZoneCard = "";
+  };
+
+
+  $scope.removeOtherZoneCard = function(index){
+    $scope.currentZoneCards.splice(index, 1);
+    positionCurrentZoneCards();
+  };
+
+
+  $scope.clearCurrentZone = function(){
+    var confirmClear;
+    if($scope.currentZoneCards.length == 0){
+      return;
+    }
+    if (confirmClear = confirm("Are you sure you want to clear " + $scope.currentZone + "?")){
+
+      if ($scope.currentPlayer == "Opponents") {
+
+        switch ($scope.currentZone) {
+          case "Library":
+            $scope.gameStats.opponent.library = [];
+            break;
+
+          case "Hand":
+            $scope.gameStats.opponent.hand = [];
+            break;
+
+          case "Graveyard":
+            $scope.gameStats.opponent.graveyard = [];
+            break;
+
+          case "Exile":
+            $scope.gameStats.opponent.exile = [];
+            break;
+
+          default:
+            console.log("How the hell did you get here?");
+
+        }
+
+      } else if ($scope.currentPlayer == "Our") {
+
+        switch ($scope.currentZone) {
+          case "Library":
+            $scope.gameStats.self.library = [];
+            break;
+
+          case "Hand":
+            $scope.gameStats.self.hand = [];
+            break;
+
+          case "Graveyard":
+            $scope.gameStats.self.graveyard = [];
+            break;
+
+          case "Exile":
+            $scope.gameStats.self.exile = [];
+            break;
+
+          default:
+            console.log("How the hell did you get here?");
+
+        }
+
+      }
+      $scope.currentZoneCards = [];
+
+    }
+  };
+
 
 
 }])

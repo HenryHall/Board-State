@@ -1,52 +1,109 @@
-<div id="gameStats">
+<div>
 
-  <section id="opponent">
+  <div id="otherZones">
 
-    <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
-      {{gameStats.opponent.life}}
+    <!-- <h3>{{currentPlayer}}'s {{currentZone}}</h3> -->
+
+    <div class="page-header">
+
+      <h1>{{currentPlayer}} {{currentZone}}</h1>
+      <br/>
+
+      <form ng-submit="createNewCurrentZone()">
+        <div class="input-group">
+
+          <input
+          class="form-control"
+          type="text"
+          ng-model="newCurrentZoneCard"
+          placeholder="Add a card..."
+          >
+
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </button>
+            <button class="btn btn-default" ng-click="clearCurrentZoneInput()">
+              <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+            </button>
+          </span>
+
+        </div>
+      </form>
+
+      <button type="button" ng-click="clearCurrentZone()" class="btn btn-warning" style="width: 100%">
+        Clear {{currentPlayer}} {{currentZone}}
+      </button>
+
     </div>
 
-    <div class="gameStatsMenuItem">
-      Library
-    </div>
-    <div class="gameStatsMenuItem">
-      Hand
-    </div>
-    <div class="gameStatsMenuItem">
-      Graveyard
-    </div>
-    <div class="gameStatsMenuItem">
-      Exile
+    <div id="otherZonesCardArea">
+
+      <div
+      class="currentZoneCard"
+      ng-repeat="card in currentZoneCards"
+      ng-style="card.style"
+      contextmenurightclick
+      >
+        <button class="removeCard" ng-click="removeOtherZoneCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
+      </div>
+
     </div>
 
-  </section>
-
-  <!-- <section>
-    <img src="./images/crab-02.svg" alt="Crab Digital Media" />
-  </section> -->
-
-  <!-- <div class="gameStatsMenuItem">
-    Menu
-  </div> -->
+  </div>
 
 
-  <section id="self">
-    <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
-      {{gameStats.self.life}}
-    </div>
+  <div id="gameStats">
 
-    <div class="gameStatsMenuItem">
-      Library
-    </div>
-    <div class="gameStatsMenuItem">
-      Hand
-    </div>
-    <div class="gameStatsMenuItem">
-      Graveyard
-    </div>
-    <div class="gameStatsMenuItem">
-      Exile
-    </div>
-  </section>
+    <section id="opponent">
+
+      <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
+        {{gameStats.opponent.life}}
+      </div>
+
+      <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Library')">
+        Library
+      </div>
+      <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Hand')">
+        Hand
+      </div>
+      <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Graveyard')">
+        Graveyard
+      </div>
+      <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Exile')">
+        Exile
+      </div>
+
+    </section>
+
+    <!-- <section>
+      <img src="./images/crab-02.svg" alt="Crab Digital Media" />
+    </section> -->
+
+    <!-- <div class="gameStatsMenuItem">
+      Menu
+    </div> -->
+
+
+    <section id="self">
+      <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
+        {{gameStats.self.life}}
+      </div>
+
+      <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Library')">
+        Library
+      </div>
+      <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Hand')">
+        Hand
+      </div>
+      <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Graveyard')">
+        Graveyard
+      </div>
+      <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Exile')">
+        Exile
+      </div>
+    </section>
+
+  </div>
 
 </div>
