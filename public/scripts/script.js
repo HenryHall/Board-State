@@ -8,8 +8,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   $scope.createdCardArray = [];
   $scope.uniqueID = 0;
   $scope.ui = {
-    all: false,
-    description: false
+    all: false
   };
   $scope.zoom = currentZoom * 100;
   $scope.gameBoardStyle = {
@@ -136,7 +135,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
       newCard.night.info = getCardInfo(newCard.info.names[1]);
       newCard.night.uniqueID = $scope.uniqueID;
       newCard.night.style = {
-        "background-Image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
+        "background-image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
         "background-size": "cover",
         "background-color": "trasnparent",
         height: '155px',
@@ -157,7 +156,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     }
 
     newCard.style = {
-      "background-Image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
+      "background-image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
       "background-size": "cover",
       "background-color": "trasnparent",
       height: '155px',
@@ -223,12 +222,14 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   };
 
 
-  $scope.inspectCard = function($event){
-    var currentCard = angular.element($event.target).parent().parent().parent();
-    currentCard.addClass('inspecting');
-    currentCard.on('mouseleave', function(){
-      currentCard.removeClass('inspecting');
-    });
+  $scope.inspectCard = function(backgroundUrl){
+    document.getElementById('inspectModal').style.display = 'block';
+    document.getElementById('inspectCardImage').style.backgroundImage = backgroundUrl;
+  };
+
+
+  $scope.closeInspect = function(){
+    document.getElementById('inspectModal').style.display = 'none';
   };
 
 
@@ -290,8 +291,11 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
 
   $scope.duplicateCard = function(index){
-    var newCard = createNewCardElement($scope.createdCardArray[index].info);
-    newCard.powerToughness = $scope.createdCardArray[index].powerToughness;
+
+    var newCardElement = createNewCardElement($scope.createdCardArray[index].info);
+    newCardElement.powerToughness = $scope.createdCardArray[index].powerToughness;
+    $scope.createdCardArray.push(newCardElement);
+
   };
 
 
@@ -316,29 +320,18 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
 
   $scope.viewZone = function(player, zone){
-    console.log("In viewZone with:", player, zone);
-    console.log(document.getElementById('otherZones').style.left);
 
-    // if (document.getElementById('otherZones').style.left == '-400px') {
-    //   console.log("Opening otherZones");
-    //   document.getElementById('otherZones').style.left = '150px';
-    // } else if (player == $scope.currentPlayer && zone == $scope.currentZone) {
-    //   document.getElementById('otherZones').style.left = '-400px';
-    //   return;
-    // }
-
-    if(player == $scope.currentPlayer && zone == $scope.currentZone || $scope.currentPlayer == undefined){
-      if (document.getElementById('otherZones').style.left == '150px'){
-        document.getElementById('otherZones').style.left = '-400px';
-        return;
-      } else {
-        document.getElementById('otherZones').style.left = '150px';
-      }
+    //Decide if the div should open, close or do nothing
+    if (document.getElementById('otherZones').style.left == '-400px' || $scope.currentZone == undefined) {
+      document.getElementById('otherZones').style.left = '150px';
+    } else if (player == $scope.currentPlayer && zone == $scope.currentZone) {
+      document.getElementById('otherZones').style.left = '-400px';
     }
 
     $scope.currentPlayer = player;
     $scope.currentZone = zone;
 
+    //Set the array that should be used with ng-repeat card displaying
     if (player == "Opponents") {
 
       switch (zone) {
@@ -617,11 +610,9 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 })
 .directive('contextmenurightclick', function($parse, $compile) {
     return function(scope, element, attrs) {
-        // var fn = $parse(attrs.ngRightClick);
         element.bind('contextmenu', function(event) {
             scope.$apply(function() {
                 event.preventDefault();
-                // fn(scope, {$event:event});
                 element.append(($compile('<custom-context-menu />')(scope)).addClass('customContextMenu').css({
                   left: (event.offsetX-10) + 'px',
                   top: (event.offsetY-10) + 'px',
@@ -632,7 +623,6 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     };
 })
 .directive('carddraggable', function($document) {
-  //From AngularJS directive example page
   return {
     restrict: 'A',
     scope: {},
@@ -653,13 +643,17 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
         element.css({
          position: 'absolute',
-         cursor: 'pointer',
+         cursor: '-webkit-grab',
          display: 'block'
         });
 
         element.on('mousedown', function(event) {
           // Prevent default dragging of selected content
           event.preventDefault();
+
+          element.css({
+            cursor: '-webkit-grabbing'
+          })
 
           startX = (event.clientX/currentZoom) - x;
           startY = (event.clientY/currentZoom) - y;
@@ -701,6 +695,9 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
 
         function mouseup() {
+          element.css({
+            cursor: '-webkit-grab'
+          })
           $document.off('mousemove', mousemove);
           $document.off('mouseup', mouseup);
         }
@@ -724,7 +721,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
     element.css({
      position: 'absolute',
-     cursor: 'pointer',
+     cursor: 'move',
      display: 'block',
      left: x + 'px'
     });

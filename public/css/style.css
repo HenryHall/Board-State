@@ -91,6 +91,7 @@ body {
   border: 2px inset rgb(135, 135, 135);
   margin: 3px;
   background-color: rgb(215, 215, 215);
+  cursor: pointer;
 }
 
 .gameStatsMenuItem:hover {
@@ -201,10 +202,31 @@ body {
    text-align: center;
 }
 
+#inspectModal {
+  display: none;
+  position: absolute;
+  z-index: 2000;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(33, 33, 33, .5);
+}
+
+#inspectCardImage {
+  position: absolute;
+  top: 5vh;
+  left: calc((100vw - 65vh)/2);
+  height: 90vh;
+  width: 65vh;
+  background-color: rgb(0, 0, 0);
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 5%;
+}
+
 .createdCard {
   border-radius: 10px;
   padding-top: 50px;
-  transition: transform .5s
+  transition: transform .5s;
 }
 
 .tapped {
@@ -286,8 +308,4 @@ body {
 
 .customContextMenu ul li:hover {
   background-color: rgb(199, 199, 199);
-}
-
-.inspecting {
-  transform: scale(3);
 }

@@ -3,7 +3,8 @@ id="customContextMenu"
 ng-mouseleave="removeContextMenu($event)">
 
   <li
-  ng-click="inspectCard($event)">
+  ng-click="inspectCard(card.style['background-image'])"
+  >
   Inspect</li>
 
   <li
