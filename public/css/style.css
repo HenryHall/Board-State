@@ -23,9 +23,10 @@ body {
 #gameBoardUi {
   position: absolute;
   top: 0px;
-  left: 95vw;
-  width: 50px;
+  left: calc(100vw - 150px);
+  width: 150px;
   height: 100vh;
+  text-align: center;
 }
 
 #gameBoardUi button {
@@ -34,7 +35,7 @@ body {
   border: none;
 }
 
-#gameBoardUi button:first-child {
+#gameBoardUi section:first-child {
   margin-top: 50px;
 }
 
@@ -89,6 +90,7 @@ body {
   height: 25px;
   text-align: center;
   border: 2px inset rgb(135, 135, 135);
+  border-radius: 15px;
   margin: 3px;
   background-color: rgb(215, 215, 215);
   cursor: pointer;
@@ -221,6 +223,18 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 5%;
+}
+
+#alertToast {
+  display: none;
+  position: absolute;
+  z-index: 3000;
+  /*height: 100px;*/
+  width: 75%;
+  left: 12.5vw;
+  font-size: 3em;
+  text-align: center;
+  border: 5px groove grey;
 }
 
 .createdCard {

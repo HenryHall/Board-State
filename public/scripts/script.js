@@ -33,6 +33,9 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     description: ""
   };
 
+  $scope.states = [];
+  $scope.currentState = 1;
+
   $http({
     method: 'GET',
     url: 'https://raw.githubusercontent.com/HenryHall/MtgJsonTest/gh-pages/JSon/AllSets.json'
@@ -45,6 +48,249 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
   $scope.clearInput = function(){
     $scope.newCardModel = "";
+  };
+
+
+  $scope.saveState = function(){
+
+    //Get the current coordinates of each card
+    var allCreatedCards = document.querySelectorAll('.createdCard');
+    var currentIndex;
+
+    //Save them to the card array
+    for (var i=0; i<allCreatedCards.length; i++){
+      currentIndex = allCreatedCards[i].dataset.index;
+      $scope.createdCardArray[currentIndex].style.top = allCreatedCards[i].style.top;
+      $scope.createdCardArray[currentIndex].style.left = allCreatedCards[i].style.left;
+    }
+
+    //New state
+    var newState = {
+      stateNumber: $scope.currentState,
+      createdCardArray: $scope.createdCardArray,
+      gameStats: $scope.gameStats
+    };
+
+    newState = angular.copy(newState);
+    console.log(newState);
+
+
+    //See if this state already has a save
+    for (var i=0; i<$scope.states.length; i++){
+      if ($scope.states[i].stateNumber == $scope.currentState){
+
+        //Save the state
+        $scope.states[i] = newState;
+        console.log("All states", $scope.states);
+        console.log("Current State", $scope.currentState);
+
+        var newToast = {
+          type: "success",
+          message: "Your state has been saved as state " + $scope.currentState + "!",
+          duration: 5
+        };
+
+        return toast(newToast);
+      }
+    }
+
+
+    //Add new state
+    $scope.states.push(newState);
+    console.log("New State", newState);
+    console.log("All states", $scope.states);
+    console.log("Current State", $scope.currentState);
+
+    var newToast = {
+      type: "success",
+      message: "A new state has been saved!",
+      duration: 5
+    };
+
+    return toast(newToast);
+
+  };
+
+
+  function toast(newToast){
+    //accepts an object with three fields: type, message, duration(seconds)
+
+    var newStyle;
+    switch (newToast.type.toLowerCase()) {
+      case 'success':
+        newStyle = {
+          'background-color': 'rgb(223, 240, 216)',
+          color: '#3c763d'
+        };
+        break;
+
+      case 'info':
+        newStyle = {
+          'background-color': 'rgb(218, 237, 247)',
+          color: '#31708f'
+        };
+        break;
+
+      case 'warning':
+        newStyle = {
+          'background-color': 'rgb(252, 248, 227)',
+          color: '#8a6d3b'
+        };
+        break;
+
+
+      case 'danger':
+        newStyle = {
+          'background-color': 'rgb(242, 222, 222)',
+          color: '#a94442'
+        };
+        break;
+
+
+      default:
+        newStyle = {
+          'background-color': '#ff7674',
+          color: '#fc2a27'
+        };
+
+    }
+
+    $scope.toastStyle = newStyle
+    $scope.toastMessage = newToast.message;
+
+    //display the element
+    var alertToast = document.getElementById('alertToast');
+    alertToast.style.display = "block";
+    alertToast.style.opacity = 1;
+    alertToast.style.transition = 'opacity ' + newToast.duration + 's';
+
+    setTimeout(function(){
+      alertToast.style.display = "none";
+    }, (newToast.duration * 1000));
+
+    // alertToast.style.opacity = 0;
+
+  }
+
+
+  function isStateSaved(){
+
+    //Check to see if the current state is saved
+    var newState = {
+      stateNumber: $scope.currentState,
+      createdCardArray: $scope.createdCardArray,
+      gameStats: $scope.gameStats
+    };
+
+    //find curent state
+    var stateCheck;
+    for (var i=0; i<$scope.states.length; i++){
+      if ($scope.states[i].stateNumber == $scope.currentState){
+        stateCheck = $scope.states[i];
+      }
+    }
+
+    if(angular.equals(stateCheck, newState)){
+      console.log("There were no changes to the state");
+    } else {
+      var statePrompt = confirm("There are unsaved changes to this state. Would you like to save first?");
+      if (statePrompt){
+        $scope.saveState();
+      } else {
+        toast({type: "warning", message: "State " + $scope.currentState + " was not saved.", duration: 3});
+        return false;
+      }
+    }
+
+  }
+
+
+  $scope.previousState = function(){
+
+    if ($scope.currentState - 1 < 1){
+      toast({type: 'warning', message: "There is no previous state!", duration: 3});
+      return;
+    }
+
+    //Find the previous state
+    for (var i=0; i<$scope.states.length; i++){
+      if ($scope.states[i].stateNumber == $scope.currentState - 1) {
+        console.log("In previous with states[i]", $scope.states[i].stateNumber, " and current state", $scope.currentState);
+        //Make sure the state is saved
+        isStateSaved();
+        //Then load
+        $scope.createdCardArray = $scope.states[i].createdCardArray;
+        $scope.gameStats = $scope.states[i].gameStats;
+        $scope.currentState = $scope.states[i].stateNumber;
+        console.log("Current State:", $scope.currentState);
+        return;
+      }
+    }
+    console.log("No previous state was found.  Current State:", $scope.currentState);
+
+  };
+
+
+  $scope.nextState = function(){
+
+    //Make sure the state is saved
+    isStateSaved();
+
+    //See if there were any changes from the previous state
+    var stateCheck;
+
+    var currentStateObject = {
+      stateNumber: $scope.currentState - 1,
+      createdCardArray: $scope.createdCardArray,
+      gameStats: $scope.gameStats
+    };
+
+    for (var i=0; i<$scope.states.length; i++){
+      if ($scope.states[i].stateNumber == $scope.currentState - 1){
+        stateCheck = $scope.states[i];
+      }
+    }
+
+    if(angular.equals(stateCheck, currentStateObject)){
+      toast({type: "warning", message: "There were no changes to this state from the previous.  The state was not changed.", duration: 3});
+      return;
+    }
+
+    //See if the next state exists
+    for (var i=0; i<$scope.states.length; i++){
+      if ($scope.states[i].stateNumber == $scope.currentState + 1) {
+        //It exists, load it
+        $scope.createdCardArray = $scope.states[i].createdCardArray;
+        $scope.gameStats = $scope.states[i].gameStats;
+        $scope.currentState = $scope.states[i].stateNumber;
+        return;
+
+      }
+    }
+
+    //Create a new state
+    console.log($scope.currentState);
+    $scope.currentState += 1;
+    console.log($scope.currentState);
+
+  };
+
+
+  $scope.getPreviousState = function(){
+    if ($scope.currentState - 1 == 0){
+      return "-";
+    } else {
+      return ($scope.currentState - 1);
+    }
+  };
+
+
+  $scope.getNextState = function(){
+    if ($scope.currentState + 1 > $scope.states.length){
+      return "N";
+    } else {
+      return ($scope.currentState + 1);
+    }
   };
 
 
@@ -82,8 +328,6 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
 
   $scope.createNewCard = function(){
-
-    console.log($scope.newCardModel);
 
     //Make sure there is text to create a card
     if($scope.newCardModel == "" || $scope.newCardModel == undefined){
@@ -629,6 +873,9 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     link: function(scope, element, attr) {
         var startX = 0, startY = 0;
 
+        console.log(element[0].style);
+
+
         //calculate where the card portal is
         var cardPortal = document.getElementById('cardPortal').getBoundingClientRect();
         var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
@@ -640,6 +887,21 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
           top: y + 'px',
           left: x + 'px'
         });
+
+        //Correct the start coords on state change
+        if (attr.toplocation){
+          console.log("had top", attr.toplocation);
+          // startY = attr.toplocation;
+          y = parseInt(attr.toplocation);
+          element.css({top: attr.toplocation});
+        }
+
+        if (attr.leftlocation){
+          console.log("had left");
+          // startX = attr.leftlocation;
+          x = parseInt(attr.leftlocation);
+          element.css({top: attr.leftlocation});
+        }
 
         element.css({
          position: 'absolute',
@@ -657,6 +919,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
           startX = (event.clientX/currentZoom) - x;
           startY = (event.clientY/currentZoom) - y;
+
 
           // console.log('x', x);
           // console.log('y', y);
@@ -725,8 +988,9 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
      display: 'block',
      left: x + 'px'
     });
+
     element.on('mousedown', function(event) {
-      // Prevent default dragging of selected content
+      // Allow focus
       if(event.target.tagName != "INPUT"){
         event.preventDefault();
       }

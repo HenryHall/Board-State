@@ -1,29 +1,55 @@
 <div id="gameBoardUi">
-  <button class="btn btn-default" ng-click="clearBoard()" title="Clear Board">
-    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-  </button>
-  <button class="btn btn-default" title="Save State">
-    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-  </button>
-  <button class="btn btn-default" ng-click="zoomIn()" title="Zoom In">
-    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
-  </button>
 
-  <!-- <button class="btn btn-default" title="Current Zoom"> -->
-    <span style="margin-bottom: 10px; display: block">{{zoom}}%</span>
-  <!-- </button> -->
+  <section>
+    <button class="btn btn-default" ng-click="clearBoard()" title="Clear Board">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </button>
+  </section>
 
-  <button class="btn btn-default" ng-click="zoomOut()" title="Zoom Out">
-    <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
-  </button>
+  <section>
+    <button class="btn btn-default" title="Save State" ng-click="saveState()">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+    </button>
+  </section>
 
-  <button class="btn btn-default" ng-click="toggleUI()" title="Toggle UI">
-    <span class="glyphicon glyphicon-eye-close" ng-if="!ui.all"></span>
-    <span class="glyphicon glyphicon-eye-open" ng-if="ui.all"></span>
-  </button>
+  <section>
+    <button class="btn btn-default" title="Previous State" ng-click="previousState()">
+      <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+    </button>
 
-  <button class="btn btn-default" ng-click="toggleDescription()" title="Show/Hide Description">
-    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-  </button>
+    <span style="margin-bottom: 10px; display: inline-block">
+      {{getPreviousState()}} <span style="border: 1px solid black; padding: 3px">{{currentState}}</span> {{getNextState()}}
+    </span>
+
+    <button class="btn btn-default" title="Next State" ng-click="nextState()">
+      <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+    </button>
+  </section>
+
+  <section>
+    <button class="btn btn-default" ng-click="zoomOut()" title="Zoom Out">
+      <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span>
+    </button>
+
+    <span style="margin-bottom: 10px; display: inline-block">{{zoom}}%</span>
+
+    <button class="btn btn-default" ng-click="zoomIn()" title="Zoom In">
+      <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+    </button>
+  </section>
+
+  <section>
+    <button class="btn btn-default" ng-click="toggleUI()" title="Toggle UI">
+      <span class="glyphicon glyphicon-eye-close" ng-if="!ui.all"></span>
+      <span class="glyphicon glyphicon-eye-open" ng-if="ui.all"></span>
+    </button>
+  </section>
+
+  <section>
+    <button class="btn btn-default" ng-click="toggleDescription()" title="Show/Hide Description">
+      <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+    </button>
+  </section>
+
 
 </div>

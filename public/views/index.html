@@ -23,6 +23,10 @@
         ng-dblclick="tapCard(card)"
         ng-class="{'tapped': card.tapped}"
         contextmenurightclick
+        data-index="{{$index}}"
+        data-toplocation="{{card.style.top}}"
+        data-leftlocation="{{card.style.left}}"
+
         >
           <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
           <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
@@ -58,6 +62,10 @@
 
       <div id="inspectModal" ng-click="closeInspect()">
         <div id="inspectCardImage"></div>
+      </div>
+
+      <div id="alertToast" ng-style="toastStyle">
+        {{toastMessage}}
       </div>
 
 

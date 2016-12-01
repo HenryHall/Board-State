@@ -2,8 +2,6 @@
 
   <div id="otherZones">
 
-    <!-- <h3>{{currentPlayer}}'s {{currentZone}}</h3> -->
-
     <div class="page-header">
 
       <h1>{{currentPlayer}} {{currentZone}}</h1>
@@ -57,21 +55,23 @@
 
     <section id="opponent">
 
+      <h2 style="text-align: center">Opponent</h2>
+
       <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
         {{gameStats.opponent.life}}
       </div>
 
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Library')">
-        Library
+        Library <span class="badge">{{gameStats.opponent.library.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Hand')">
-        Hand
+        Hand <span class="badge">{{gameStats.opponent.hand.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Graveyard')">
-        Graveyard
+        Graveyard <span class="badge">{{gameStats.opponent.graveyard.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Exile')">
-        Exile
+        Exile <span class="badge">{{gameStats.opponent.exile.length}}</span>
       </div>
 
     </section>
@@ -86,21 +86,24 @@
 
 
     <section id="self">
+
+      <h2 style="text-align: center">Self</h2>
+
       <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
         {{gameStats.self.life}}
       </div>
 
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Library')">
-        Library
+        Library <span class="badge">{{gameStats.self.library.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Hand')">
-        Hand
+        Hand <span class="badge">{{gameStats.self.hand.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Graveyard')">
-        Graveyard
+        Graveyard <span class="badge">{{gameStats.self.graveyard.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Exile')">
-        Exile
+        Exile <span class="badge">{{gameStats.self.exile.length}}</span>
       </div>
     </section>
 
