@@ -29,8 +29,12 @@
         </div>
       </form>
 
-      <button type="button" ng-click="clearCurrentZone()" class="btn btn-warning" style="width: 100%">
-        Clear {{currentPlayer}} {{currentZone}}
+      <button ng-click="clearCurrentZone()" class="btn btn-warning" style="width: 45%">
+        Empty {{currentZone}}
+      </button>
+
+      <button ng-click="hideOtherZones()" class="btn btn-info" style="width: 45%">
+        Hide {{currentZone}}
       </button>
 
     </div>

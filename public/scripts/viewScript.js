@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', []);
 
 var currentZoom = 1;
 
-myApp.controller('createCardController', ['$scope', '$http', function($scope, $http){
+myApp.controller('createCardController', ['$scope', '$http', '$location', function($scope, $http, $location){
 
   $scope.allSets = {};
   $scope.createdCardArray = [];
@@ -43,6 +43,28 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   .then(function(data){
     $scope.allSets = data.data;
     console.log($scope.allSets);
+  });
+
+  var boardStateParams = $location.search().stateId;
+  console.log("Sending:", boardStateParams);
+  $http({
+    method: 'GET',
+    url: '/boardStates/' + boardStateParams
+  }).then(function(data){
+    $scope.states = data.data.allStates;
+    console.log($scope.states);
+
+    for (var i=0; i<$scope.states.length; i++){
+      console.log("i", i);
+      if ($scope.states[i].stateNumber == 1) {
+        //load it
+        console.log("Loading state");
+        $scope.createdCardArray = $scope.states[i].createdCardArray;
+        $scope.gameStats = $scope.states[i].gameStats;
+        $scope.currentState = $scope.states[i].stateNumber;
+        // return;
+      }
+    }
   });
 
 
