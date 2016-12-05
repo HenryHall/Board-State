@@ -43,11 +43,28 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   .then(function(data){
     $scope.allSets = data.data;
     console.log($scope.allSets);
+
+    //Create autocomplete array
+    $scope.allCardNames = [];
+    for (set in $scope.allSets){
+      for (var i=0; i<$scope.allSets[set].cards.length; i++){
+        $scope.allCardNames.push($scope.allSets[set].cards[i].name);
+      }
+    }
+
   });
 
 
   $scope.clearInput = function(){
     $scope.newCardModel = "";
+  };
+
+  $scope.selectSuggestion = function(cardName){
+    $scope.newCardModel = cardName;
+  };
+
+  $scope.selectZoneSuggestion = function(cardName){
+    $scope.newCurrentZoneCard = cardName;
   };
 
 
@@ -377,7 +394,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
         if($scope.allSets[i].cards[j].name.toLowerCase() == card.toLowerCase()){
           //Check to see if the image can be loaded
           if($scope.allSets[i].cards[j].multiverseid){
-            console.log($scope.allSets[i].cards[j]);
+            // console.log($scope.allSets[i].cards[j]);
             return $scope.allSets[i].cards[j];
           } else {
             console.log("No Image was found for this card, will continue looking.");
@@ -826,6 +843,39 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
 
 }])
+.filter('cardFilter', function(){
+  return function(input, model){
+
+    input = input || '';
+    var output = [];
+    var maxCount = 0;
+
+    //Only filter after at least 2 characters have been entered
+    if (model && model.length > 1){
+
+      //Search for matches starting at index 0 first
+      for (var i=0; i<input.length; i++){
+        if (input[i].toLowerCase().indexOf(model.toLowerCase()) == 0 && output.indexOf(input[i]) == -1){
+          output.push(input[i]);
+          maxCount++;
+          if (maxCount == 10){return output;}
+        }
+      }
+
+      //Then search at any index
+      for (var i=0; i<input.length; i++){
+        if (input[i].toLowerCase().indexOf(model.toLowerCase()) !== -1 && output.indexOf(input[i]) == -1){
+          output.push(input[i]);
+          maxCount++;
+          if (maxCount == 10){return output;}
+        }
+      }
+
+    }
+
+    return output;
+  }
+})
 .directive('cardPortal', function(){
   return {
     restrict: 'E',

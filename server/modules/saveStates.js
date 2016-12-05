@@ -7,20 +7,22 @@ var router = express.Router();
 
 var sha1 = require('sha-1');
 
+var BoardState = require('./boardstate_model.js');
 
-var boardStateSchema = mongoose.Schema({
-    allStates: [{
-      stateNumber: Number,
-      createdCardArray: Array,
-      gameStats: {}
-    }],
-    hashed_id: String
-  });
+
+// var boardStateSchema = mongoose.Schema({
+//     allStates: [{
+//       stateNumber: Number,
+//       createdCardArray: Array,
+//       gameStats: {}
+//     }],
+//     hashed_id: String
+//   });
 
 router.post('/', function(req, res){
   console.log("In /saveStates");
 
-  var BoardState = mongoose.model('BoardState', boardStateSchema);
+  // var BoardState = mongoose.model('BoardState', boardStateSchema);
 
     var newStates = new BoardState({
       allStates: req.body

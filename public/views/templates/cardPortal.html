@@ -26,6 +26,17 @@
         </div>
       </form>
 
+      <ul id="suggestions">
+        <li
+        ng-repeat="cardName in allCardNames | cardFilter: newCardModel track by $index"
+        class="suggestion"
+        ng-click="selectSuggestion(cardName)"
+        ng-if="cardName != newCardModel"
+        >
+          {{cardName}}
+        </li>
+      </ul>
+
     </div>
 
   </div>

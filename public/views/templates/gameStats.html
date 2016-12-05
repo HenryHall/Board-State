@@ -29,6 +29,17 @@
         </div>
       </form>
 
+      <ul id="suggestions">
+        <li
+        ng-repeat="cardName in allCardNames | cardFilter: newCurrentZoneCard track by $index"
+        class="suggestion"
+        ng-click="selectZoneSuggestion(cardName)"
+        ng-if="cardName != newCurrentZoneCard"
+        >
+          {{cardName}}
+        </li>
+      </ul>
+
       <button ng-click="clearCurrentZone()" class="btn btn-warning" style="width: 45%">
         Empty {{currentZone}}
       </button>

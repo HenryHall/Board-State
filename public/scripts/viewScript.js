@@ -43,6 +43,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   .then(function(data){
     $scope.allSets = data.data;
     console.log($scope.allSets);
+
   });
 
   var boardStateParams = $location.search().stateId;

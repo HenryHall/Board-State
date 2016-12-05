@@ -20,6 +20,29 @@ body {
   background-color: rgba(207, 207, 207, 0.5);
 }
 
+#suggestions {
+  position: absolute;
+  z-index: 1000;
+  background-color: rgb(207, 207, 207);
+  list-style: none;
+  text-align: left;
+  padding-left: 0px;
+}
+
+.suggestion {
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.suggestion:last-child {
+  padding-bottom: 10px;
+}
+
+.suggestion:hover {
+  background-color: rgb(47, 47, 47);
+  color: rgb(224, 224, 224);
+}
+
 #gameBoardUi {
   position: absolute;
   top: 0px;
@@ -59,11 +82,9 @@ body {
 }
 
 #opponent {
-  padding-top: 25px;
 }
 
 #self {
-  padding-bottom: 25px;
   vertical-align: bottom;
 }
 
@@ -183,7 +204,7 @@ body {
 #stateDescription textarea {
   height: 100%;
   width: 100%;
-  font-size: 3em;
+  font-size: 2em;
   padding: 30px;
   background-color: rgba(209, 209, 209, .75);
   border-radius: 10px;
@@ -306,6 +327,7 @@ body {
   box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
   width: auto;
   z-index: 2000;
+  padding: 5px;
 }
 
 .customContextMenu ul {
