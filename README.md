@@ -1,3 +1,3 @@
 # Board-State
 
-[Live Demo](https://artifact-of-protection.herokuapp.com/)
+[Live Demo](https://board-state.herokuapp.com/)
