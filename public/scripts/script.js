@@ -195,6 +195,10 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     //Make sure the state is saved
     isStateSaved();
 
+    if ($scope.uploadString){
+      toast({type: 'info', message: 'Your Board State has already been uploaded and can be viewed here:\nhttps://board-state.herokuapp.com/states/#/?' + $scope.uploadString, duration: 10});
+    }
+
     var confirmSaveAndFinish = confirm('Are you sure you would like to finish and upload your states?  Once you do this you cannot edit it.');
     if (!confirmSaveAndFinish) {
       return;
@@ -206,7 +210,8 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
       data: $scope.states
     }).then(function(data){
       console.log(data.data);
-      toast({type: 'success', message: 'Your state has been successfully uploaded!', duration: 5});
+      $scope.uploadString = data.data;
+      toast({type: 'success', message: 'Your state has been successfully uploaded!  You can view it here:\nhttps://board-state.herokuapp.com/states/#/?' + data.data, duration: 10});
     });
 
   };
