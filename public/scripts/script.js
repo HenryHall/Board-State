@@ -38,7 +38,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
 
   $http({
     method: 'GET',
-    url: 'https://raw.githubusercontent.com/HenryHall/MtgJsonTest/gh-pages/JSon/AllSets.json'
+    url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
   })
   .then(function(data){
     $scope.allSets = data.data;
