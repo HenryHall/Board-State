@@ -8,18 +8,6 @@ var sha1 = require('sha-1');
 var BoardState = require('./boardstate_model.js');
 
 
-// var boardStateSchema = mongoose.Schema({
-//     allStates: [{
-//       stateNumber: Number,
-//       createdCardArray: Array,
-//       gameStats: {}
-//     }],
-//     hashed_id: String
-//   });
-
-// var BoardState = mongoose.model('BoardState', boardStateSchema);
-
-
 router.get('/:boardStateId', function(req, res){
 
   var boardStateId = req.params.boardStateId;

@@ -14,12 +14,6 @@ app.get( '/', function( req, res ){
   res.sendFile( path.resolve( 'public/views/index.html' ) );
 });
 
-app.get('/states', function(req,res){
-  // console.log( 'loading state:',  req.params.state);
-  res.sendFile( path.resolve( 'public/views/loadStates/viewState.html' ) );
-
-});
-
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
@@ -32,5 +26,4 @@ var boardStates = require ('../server/modules/boardStates.js');
 
 //Used for saving
 app.use('/saveStates', saveStates);
-
 app.use('/boardStates', boardStates);

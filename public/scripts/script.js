@@ -2,8 +2,9 @@ var myApp = angular.module('myApp', []);
 
 var currentZoom = 1;
 
-myApp.controller('createCardController', ['$scope', '$http', function($scope, $http){
+myApp.controller('createCardController', ['$scope', '$http', '$location', function($scope, $http, $location){
 
+  //Initialize data
   $scope.allSets = {};
   $scope.createdCardArray = [];
   $scope.uniqueID = 0;
@@ -36,6 +37,37 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
   $scope.states = [];
   $scope.currentState = 1;
 
+
+  //If this is a preloaded state, get the data
+  if($location.search().stateId !== undefined){
+
+    var boardStateParams = $location.search().stateId;
+    console.log("Sending:", boardStateParams);
+    $http({
+      method: 'GET',
+      url: '/boardStates/' + boardStateParams
+    }).then(function(data){
+      $scope.states = data.data.allStates;
+      console.log($scope.states);
+
+      for (var i=0; i<$scope.states.length; i++){
+        console.log("i", i);
+        if ($scope.states[i].stateNumber == 1) {
+          //load first state
+          console.log("Loading state");
+          $scope.createdCardArray = $scope.states[i].createdCardArray;
+          $scope.gameStats = $scope.states[i].gameStats;
+          $scope.currentState = $scope.states[i].stateNumber;
+          setCardPositions();
+          return;
+        }
+      }
+    });
+
+  }
+
+
+  //Load the card data
   $http({
     method: 'GET',
     url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
@@ -44,7 +76,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     $scope.allSets = data.data;
     console.log($scope.allSets);
 
-    //Create autocomplete array
+    //Create suggestion array
     $scope.allCardNames = [];
     for (set in $scope.allSets){
       for (var i=0; i<$scope.allSets[set].cards.length; i++){
@@ -53,6 +85,18 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     }
 
   });
+
+
+  function setCardPositions(){
+
+    var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
+
+    for (var i=0; i<$scope.createdCardArray.length; i++){
+      $scope.createdCardArray[i].style.top = ((gameBoard.bottom - gameBoard.top) * (parseInt($scope.createdCardArray[i].positionPercent.top)/100))/currentZoom + 'px';
+      $scope.createdCardArray[i].style.left = ((gameBoard.right - gameBoard.left) * (parseInt($scope.createdCardArray[i].positionPercent.left)/100))/currentZoom + 'px';
+    }
+    return;
+  }
 
 
   $scope.clearInput = function(){
@@ -73,13 +117,22 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     //Get the current coordinates of each card
     var allCreatedCards = document.querySelectorAll('.createdCard');
     var currentIndex;
+    var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
 
     //Save them to the card array
     for (var i=0; i<allCreatedCards.length; i++){
       currentIndex = allCreatedCards[i].dataset.index;
+
       $scope.createdCardArray[currentIndex].style.top = allCreatedCards[i].style.top;
       $scope.createdCardArray[currentIndex].style.left = allCreatedCards[i].style.left;
+
+      //Store the position percentages
+      $scope.createdCardArray[currentIndex].positionPercent = {};
+      $scope.createdCardArray[currentIndex].positionPercent.top = Math.floor(parseInt(allCreatedCards[i].style.top) * 100 / (gameBoard.bottom - gameBoard.top)) + '%';
+      $scope.createdCardArray[currentIndex].positionPercent.left = Math.floor(parseInt(allCreatedCards[i].style.left) * 100 / (gameBoard.right - gameBoard.left)) + '%';
+
     }
+
 
     //New state
     var newState = {
@@ -112,7 +165,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     }
 
 
-    //Add new state
+    //No saves found, add new state
     $scope.states.push(newState);
     console.log("New State", newState);
     console.log("All states", $scope.states);
@@ -196,7 +249,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     isStateSaved();
 
     if ($scope.uploadString){
-      toast({type: 'info', message: 'Your Board State has already been uploaded and can be viewed here:\nhttps://board-state.herokuapp.com/states/#/?stateId=' + $scope.uploadString, duration: 10});
+      toast({type: 'info', message: 'Your Board State has already been uploaded and can be viewed here:\nhttps://board-state.herokuapp.com/#/?stateId=' + $scope.uploadString, duration: 10});
       return;
     }
 
@@ -212,7 +265,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
     }).then(function(data){
       console.log(data.data);
       $scope.uploadString = data.data;
-      toast({type: 'success', message: 'Your state has been successfully uploaded!  You can view it here:\nhttps://board-state.herokuapp.com/states/#/?stateId=' + data.data, duration: 10});
+      toast({type: 'success', message: 'Your state has been successfully uploaded!  You can view it here:\nhttps://board-state.herokuapp.com/#/?stateId=' + data.data, duration: 10});
     });
 
   };
@@ -267,6 +320,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
         $scope.createdCardArray = $scope.states[i].createdCardArray;
         $scope.gameStats = $scope.states[i].gameStats;
         $scope.currentState = $scope.states[i].stateNumber;
+        setCardPositions();
         console.log("Current State:", $scope.currentState);
         return;
       }
@@ -308,6 +362,7 @@ myApp.controller('createCardController', ['$scope', '$http', function($scope, $h
         $scope.createdCardArray = $scope.states[i].createdCardArray;
         $scope.gameStats = $scope.states[i].gameStats;
         $scope.currentState = $scope.states[i].stateNumber;
+        setCardPositions();
         return;
 
       }
