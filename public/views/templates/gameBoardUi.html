@@ -1,7 +1,7 @@
 <div id="gameBoardUi">
 
   <section>
-    <button class="btn btn-default" ng-click="clearBoard()" title="Clear Board">
+    <button class="btn btn-default" ng-click="clearBoard()" title="Clear Current State">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
   </section>
@@ -42,16 +42,22 @@
     </button>
   </section>
 
-  <section>
-    <button class="btn btn-default" ng-click="toggleUI()" title="Toggle UI">
-      <span class="glyphicon glyphicon-eye-close" ng-if="!ui.all"></span>
-      <span class="glyphicon glyphicon-eye-open" ng-if="ui.all"></span>
+  <!-- <section>
+    <button class="btn btn-default" ng-click="recenterGameBoard()" title ="Re-center Screen">
+      <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
     </button>
   </section>
 
   <section>
+    <button class="btn btn-default" ng-click="toggleUI()" title="Toggle UI">
+      <span class="glyphicon glyphicon-eye-close" aria-hidden="true" ng-if="!ui.all"></span>
+      <span class="glyphicon glyphicon-eye-open" aria-hidden="true" ng-if="ui.all"></span>
+    </button>
+  </section> -->
+
+  <section>
     <button class="btn btn-default" ng-click="toggleDescription()" title="Show/Hide Description">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+      <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
     </button>
   </section>
 

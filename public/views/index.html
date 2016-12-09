@@ -13,7 +13,11 @@
 
     <div ng-controller="createCardController">
 
-      <div id="gameBoard" ng-style="gameBoardStyle" draggable>
+      <div id="gameBoard" ng-style="gameBoardStyle" gameboarddraggable>
+
+        <div>
+          <card-portal />
+        </div>
 
         <div
         class="createdCard"
@@ -43,11 +47,6 @@
 
       <!-- <div id="uiElements" ng-if="!ui.hidden"> -->
       <div id="uiElements">
-
-
-        <div>
-          <card-portal />
-        </div>
 
         <div>
           <game-stats />

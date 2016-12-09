@@ -70,55 +70,47 @@
 
     <section id="opponent">
 
-      <h2 style="text-align: center">Opponent</h2>
+      <h2 style="text-align: center">Player 2</h2>
 
       <div id="opponentLife" ng-click="incrementOpponent()" ng-right-click="decrementOpponent()">
         {{gameStats.opponent.life}}
       </div>
 
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Library')">
-        Library <span class="badge">{{gameStats.opponent.library.length}}</span>
+        Library <span class="badge" ng-if="gameStats.opponent.library.length != 0">{{gameStats.opponent.library.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Hand')">
-        Hand <span class="badge">{{gameStats.opponent.hand.length}}</span>
+        Hand <span class="badge" ng-if="gameStats.opponent.hand.length != 0">{{gameStats.opponent.hand.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Graveyard')">
-        Graveyard <span class="badge">{{gameStats.opponent.graveyard.length}}</span>
+        Graveyard <span class="badge" ng-if="gameStats.opponent.graveyard.length != 0">{{gameStats.opponent.graveyard.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Opponents', 'Exile')">
-        Exile <span class="badge">{{gameStats.opponent.exile.length}}</span>
+        Exile <span class="badge" ng-if="gameStats.opponent.exile.length != 0">{{gameStats.opponent.exile.length}}</span>
       </div>
 
     </section>
 
-    <!-- <section>
-      <img src="./images/crab-02.svg" alt="Crab Digital Media" />
-    </section> -->
-
-    <!-- <div class="gameStatsMenuItem">
-      Menu
-    </div> -->
-
 
     <section id="self">
 
-      <h2 style="text-align: center">Self</h2>
+      <h2 style="text-align: center">Player 1</h2>
 
       <div id="selfLife" ng-click="incrementSelf()" ng-right-click="decrementSelf()">
         {{gameStats.self.life}}
       </div>
 
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Library')">
-        Library <span class="badge">{{gameStats.self.library.length}}</span>
+        Library <span class="badge" ng-if="gameStats.self.library.length != 0">{{gameStats.self.library.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Hand')">
-        Hand <span class="badge">{{gameStats.self.hand.length}}</span>
+        Hand <span class="badge" ng-if="gameStats.self.hand.length != 0">{{gameStats.self.hand.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Graveyard')">
-        Graveyard <span class="badge">{{gameStats.self.graveyard.length}}</span>
+        Graveyard <span class="badge" ng-if="gameStats.self.graveyard.length != 0">{{gameStats.self.graveyard.length}}</span>
       </div>
       <div class="gameStatsMenuItem" ng-click="viewZone('Our', 'Exile')">
-        Exile <span class="badge">{{gameStats.self.exile.length}}</span>
+        Exile <span class="badge" ng-if="gameStats.self.exile.length != 0">{{gameStats.self.exile.length}}</span>
       </div>
     </section>
 

@@ -86,14 +86,14 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
   });
 
-
   function setCardPositions(){
 
-    var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
+    var gameBoard = document.getElementById('gameBoard')
+    console.log(gameBoard);
 
     for (var i=0; i<$scope.createdCardArray.length; i++){
-      $scope.createdCardArray[i].style.top = ((gameBoard.bottom - gameBoard.top) * (parseInt($scope.createdCardArray[i].positionPercent.top)/100))/currentZoom + 'px';
-      $scope.createdCardArray[i].style.left = ((gameBoard.right - gameBoard.left) * (parseInt($scope.createdCardArray[i].positionPercent.left)/100))/currentZoom + 'px';
+      $scope.createdCardArray[i].style.top = ((gameBoard.offsetHeight) * (parseInt($scope.createdCardArray[i].positionPercent.top)/100)) + 'px';
+      $scope.createdCardArray[i].style.left = ((gameBoard.offsetWidth) * (parseInt($scope.createdCardArray[i].positionPercent.left)/100)) + 'px';
     }
     return;
   }
@@ -117,7 +117,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     //Get the current coordinates of each card
     var allCreatedCards = document.querySelectorAll('.createdCard');
     var currentIndex;
-    var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
+    var gameBoard = document.getElementById('gameBoard');
 
     //Save them to the card array
     for (var i=0; i<allCreatedCards.length; i++){
@@ -128,8 +128,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
       //Store the position percentages
       $scope.createdCardArray[currentIndex].positionPercent = {};
-      $scope.createdCardArray[currentIndex].positionPercent.top = Math.floor(parseInt(allCreatedCards[i].style.top) * 100 / (gameBoard.bottom - gameBoard.top)) + '%';
-      $scope.createdCardArray[currentIndex].positionPercent.left = Math.floor(parseInt(allCreatedCards[i].style.left) * 100 / (gameBoard.right - gameBoard.left)) + '%';
+      $scope.createdCardArray[currentIndex].positionPercent.top = Math.floor(parseInt(allCreatedCards[i].style.top) * 100 / (gameBoard.offsetHeight)) + '%';
+      $scope.createdCardArray[currentIndex].positionPercent.left = Math.floor(parseInt(allCreatedCards[i].style.left) * 100 / (gameBoard.offsetWidth)) + '%';
 
     }
 
@@ -190,21 +190,24 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       case 'success':
         newStyle = {
           'background-color': 'rgb(223, 240, 216)',
-          color: '#3c763d'
+          color: '#3c763d',
+          border: '5px solid #d6e9c6'
         };
         break;
 
       case 'info':
         newStyle = {
           'background-color': 'rgb(218, 237, 247)',
-          color: '#31708f'
+          color: '#31708f',
+          border: '3px solid #bce8f1'
         };
         break;
 
       case 'warning':
         newStyle = {
           'background-color': 'rgb(252, 248, 227)',
-          color: '#8a6d3b'
+          color: '#8a6d3b',
+          border: '3px solid #faebcc'
         };
         break;
 
@@ -212,7 +215,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       case 'danger':
         newStyle = {
           'background-color': 'rgb(242, 222, 222)',
-          color: '#a94442'
+          color: '#a94442',
+          border: '3px solid #ebccd1'
         };
         break;
 
@@ -542,6 +546,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }
     currentZoom = currentZoom + .1;
     $scope.gameBoardStyle.transform = 'scale(' + currentZoom + ')';
+    document.getElementById('cardPortal').style.transform = 'scale(' + Math.pow(currentZoom, -1) + ')';
     $scope.zoom = Math.floor(currentZoom * 100);
   }
 
@@ -552,8 +557,17 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }
     currentZoom = currentZoom - .1;
     $scope.gameBoardStyle.transform = 'scale(' + currentZoom + ')';
+    document.getElementById('cardPortal').style.transform = 'scale(' + Math.pow(currentZoom, -1) + ')';
     $scope.zoom = Math.floor(currentZoom * 100);
   }
+
+
+  $scope.recenterGameBoard = function(){
+
+    //Re-center gameBoard and cardPortal
+
+
+  };
 
 
   $scope.tapCard = function(card){
@@ -1009,12 +1023,9 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
 
         //calculate where the card portal is
-        var cardPortal = document.getElementById('cardPortal').getBoundingClientRect();
-        var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
-        // console.log("gameboard", gameBoard);
-        // console.log("cardPortal", cardPortal);
-        var y = (gameBoard.bottom - gameBoard.top)/4 + (cardPortal.top/currentZoom) + (125/currentZoom);
-        var x = (gameBoard.right - gameBoard.left)/4 + (cardPortal.left/currentZoom) + (45/currentZoom);
+        var cardPortal = document.getElementById('cardPortal').style;
+        var y = parseInt(cardPortal.top) + 125/currentZoom;
+        var x = parseInt(cardPortal.left) + 45/currentZoom;
         element.css({
           top: y + 'px',
           left: x + 'px'
@@ -1048,36 +1059,16 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
           startX = (event.clientX/currentZoom) - x;
           startY = (event.clientY/currentZoom) - y;
 
-
-          // console.log('x', x);
-          // console.log('y', y);
-          // console.log('startX', startX);
-          // console.log('startY', startY);
-          // console.log('event x', event.clientX);
-          // console.log('event y', event.clientY);
           $document.on('mousemove', mousemove);
           $document.on('mouseup', mouseup);
         });
 
 
         function mousemove(event) {
-          // console.log('x', x);
-          // console.log('y', y);
-          // console.log('startX', startX);
-          // console.log('startY', startY);
-          // console.log('event x', event.clientX);
-          // console.log('event y', event.clientY);
-
 
             y = ((event.clientY/currentZoom) - startY);
             x = ((event.clientX/currentZoom) - startX);
 
-            // console.log('x', x);
-            // console.log('y', y);
-            // console.log('startX', startX);
-            // console.log('startY', startY);
-            // console.log('event x', event.clientX);
-            // console.log('event y', event.clientY);
             element.css({
               top: y + 'px',
               left:  x + 'px'
@@ -1095,19 +1086,16 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       }
     }
 })
-.directive('draggable', function($document) {
+.directive('gameboarddraggable', function($document) {
   //From AngularJS directive example page
   return function(scope, element, attr) {
-    var startX = 150, startY = 0, x = 150, y = 0;
 
     //Set the starting coords for the gameBoard
-    if(element[0].id == "gameBoard"){
-      var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
-      startX = gameBoard.left;
-      startY = gameBoard.top;
-      x = gameBoard.left;
-      y = gameBoard.top;
-    }
+    var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
+    var startX = gameBoard.left;
+    var startY = gameBoard.top;
+    var x = gameBoard.left;
+    var y = gameBoard.top;
 
     element.css({
      position: 'absolute',
@@ -1117,15 +1105,14 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     });
 
     element.on('mousedown', function(event) {
-      // Allow focus
-      if(event.target.tagName != "INPUT"){
-        event.preventDefault();
-      }
 
-      //Make sure the gameBoard doesnt move when a card is dragged
-      if(event.target.classList.contains('createdCard')){
+      event.preventDefault();
+
+      //Make sure the gameBoard doesnt move when another draggable is targeted
+      if (event.target.id !== 'gameBoardOpponent' && event.target.id !== 'gameBoardOurs'){
         return;
       }
+
 
       startX = (event.clientX - x);
       startY = (event.clientY - y);
@@ -1139,6 +1126,62 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
         y = (event.clientY - startY);
         x = (event.clientX - startX);
+
+        element.css({
+          top: y + 'px',
+          left:  x + 'px'
+        });
+    }
+
+
+    function mouseup() {
+      $document.off('mousemove', mousemove);
+      $document.off('mouseup', mouseup);
+    }
+  };
+})
+.directive('cardportaldraggable', function($document) {
+  //From AngularJS directive example page
+  return function(scope, element, attr) {
+
+    var gameBoard = document.getElementById('gameBoard').getBoundingClientRect();
+    var startLeft = (gameBoard.right - gameBoard.left)/4 + 150;
+    var startTop = (gameBoard.bottom - gameBoard.top)/4;
+
+    var startX = startLeft;
+    var x = startLeft;
+    var startY = startTop;
+    var y = startTop;
+
+    element.css({
+     position: 'absolute',
+     cursor: 'move',
+     display: 'block',
+     left: x + 'px',
+     top: y + 'px'
+    });
+
+    element.on('mousedown', function(event) {
+      // Allow focus
+      if(event.target.tagName == "INPUT"){
+        event.target.focus();
+      } else {
+        event.preventDefault();
+      }
+
+
+      startX = ((event.clientX/currentZoom) - x);
+      startY = ((event.clientY/currentZoom) - y);
+
+      $document.on('mousemove', mousemove);
+      $document.on('mouseup', mouseup);
+    });
+
+
+    function mousemove(event) {
+
+        y = ((event.clientY/currentZoom) - startY);
+        x = ((event.clientX/currentZoom) - startX);
 
         element.css({
           top: y + 'px',
