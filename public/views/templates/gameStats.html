@@ -15,6 +15,8 @@
           type="text"
           ng-model="newCurrentZoneCard"
           placeholder="Add a card..."
+          autocomplete="off"
+          ondblclick="this.select()"
           >
 
           <span class="input-group-btn">
@@ -34,7 +36,6 @@
         ng-repeat="cardName in allCardNames | cardFilter: newCurrentZoneCard track by $index"
         class="suggestion"
         ng-click="selectZoneSuggestion(cardName)"
-        ng-if="cardName != newCurrentZoneCard"
         >
           {{cardName}}
         </li>

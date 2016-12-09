@@ -15,12 +15,12 @@ ng-mouseleave="removeContextMenu($event)">
   Inspect</li>
 
   <li
-  ng-if="card.info.types.indexOf('Creature') != -1 || card.info.subtypes.indexOf('Vehicle') != -1"
+  ng-if="card.info.type.indexOf('Creature') != -1 || card.info.type.indexOf('Vehicle') != -1"
   ng-click="setPT($index)">
   Set Power/Toughness</li>
 
   <li
-  ng-if="card.info.types.indexOf('Planeswalker') != -1"
+  ng-if="card.info.type.indexOf('Planeswalker') != -1"
   ng-click="setLoyalty($index)">
   Set Loyalty</li>
 

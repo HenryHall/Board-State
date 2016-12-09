@@ -5,15 +5,18 @@
 
       <h3>Card Portal</h3>
 
-      <form ng-submit="createNewCard()">
+      <form ng-submit="createNewCard()" ng-keydown="suggestionSelect($event)">
         <div class="input-group">
 
           <input
+          id="cardPortalInput"
           class="form-control"
           type="text"
           ng-model="newCardModel"
+          autocomplete="off"
           placeholder="New Card"
           autofocus
+          ondblclick="this.select()"
           >
 
           <span class="input-group-btn">
@@ -31,9 +34,8 @@
         ng-repeat="cardName in allCardNames | cardFilter: newCardModel track by $index"
         class="suggestion"
         ng-click="selectSuggestion(cardName)"
-        ng-if="cardName != newCardModel"
         >
-          {{cardName}}
+          <a href="#">{{cardName}}</a>
         </li>
       </ul>
 

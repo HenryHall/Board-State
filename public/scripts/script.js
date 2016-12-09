@@ -105,6 +105,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
   $scope.selectSuggestion = function(cardName){
     $scope.newCardModel = cardName;
+    document.getElementById('cardPortalInput').select();
+    document.getElementById('suggestions').style.display = 'none';
   };
 
   $scope.selectZoneSuggestion = function(cardName){
@@ -128,8 +130,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
       //Store the position percentages
       $scope.createdCardArray[currentIndex].positionPercent = {};
-      $scope.createdCardArray[currentIndex].positionPercent.top = Math.floor(parseInt(allCreatedCards[i].style.top) * 100 / (gameBoard.offsetHeight)) + '%';
-      $scope.createdCardArray[currentIndex].positionPercent.left = Math.floor(parseInt(allCreatedCards[i].style.left) * 100 / (gameBoard.offsetWidth)) + '%';
+      $scope.createdCardArray[currentIndex].positionPercent.top = parseInt(allCreatedCards[i].style.top) * 100 / (gameBoard.offsetHeight) + '%';
+      $scope.createdCardArray[currentIndex].positionPercent.left = parseInt(allCreatedCards[i].style.left) * 100 / (gameBoard.offsetWidth) + '%';
 
     }
 
@@ -432,6 +434,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
 
   $scope.createNewCard = function(){
+
+    $scope.$emit('form:submit');
 
     //Make sure there is text to create a card
     if($scope.newCardModel == "" || $scope.newCardModel == undefined){
@@ -956,7 +960,54 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     restrict: 'E',
     templateUrl: '../views/templates/cardPortal.html',
     controllerAs: 'createCardController',
-    replace: true
+    replace: true,
+    link: function(scope, element, attrs){
+      //Traverse the suggestions
+      var index;
+
+      scope.$on('form:submit', function(){
+        //Form was submitted
+        console.log("Form submitted");
+        index = undefined;
+        document.getElementById('suggestions').style.display = 'none';
+      });
+
+      element.on('keydown', function(event){
+
+        document.getElementById('suggestions').style.display = 'block';
+
+        var keyPress = event.which;
+        var suggestions = document.querySelectorAll('.suggestion a');
+
+        if (suggestions.length !== 0){
+
+          if(keyPress == 9 || keyPress == 40){
+            //Tab or down arrow key
+            if(index == undefined){
+              index = 0;
+            } else if(suggestions[index + 1]) {
+              index++;
+            } else {
+              index = 0;
+            }
+            //Prevent tabbing to new element
+            event.preventDefault();
+            suggestions[index].focus();
+          } else if(keyPress == 38){
+            //Up arrow
+            if(suggestions[index - 1]){
+              index--;
+              suggestions[index].focus();
+            } else {
+              index = suggestions.length - 1;
+              suggestions[index].focus();
+            }
+          }
+        }
+
+
+      });
+    }
   }
 })
 .directive('gameBoardUi', function(){
