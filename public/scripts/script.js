@@ -48,10 +48,16 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       url: '/boardStates/' + boardStateParams
     }).then(function(data){
       $scope.states = data.data.allStates;
-      console.log($scope.states);
 
       for (var i=0; i<$scope.states.length; i++){
-        console.log("i", i);
+        //Save the state
+        $scope.createdCardArray = $scope.states[i].createdCardArray;
+        $scope.gameStats = $scope.states[i].gameStats;
+        $scope.currentState = $scope.states[i].stateNumber;
+        saveState();
+      }
+
+      for (var i=0; i<$scope.states.length; i++){
         if ($scope.states[i].stateNumber == 1) {
           //load first state
           console.log("Loading state");
@@ -59,6 +65,9 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
           $scope.gameStats = $scope.states[i].gameStats;
           $scope.currentState = $scope.states[i].stateNumber;
           setCardPositions();
+          if($scope.gameStats.description){
+            document.getElementById('stateDescription').style.bottom = '0px';
+          }
           return;
         }
       }
@@ -376,6 +385,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
     //Create a new state
     console.log($scope.currentState);
+    $scope.createdCardArray = angular.copy($scope.createdCardArray);
+    $scope.gameStats = angular.copy($scope.gameStats);
     $scope.currentState += 1;
     console.log($scope.currentState);
 
