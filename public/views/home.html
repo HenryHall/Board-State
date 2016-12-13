@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Board State</title>
+
+    <link rel="stylesheet" href="../vendors/bootstrap/css/bootstrap.min.css" media="screen" title="no title">
+    <link rel="stylesheet" href="../css/homeStyle.css" media="screen" title="no title">
+    <link rel="icon" href="../images/crab-02.svg" sizes="any" type="image/svg+xml">
+
+  </head>
+  <body>
+
+      <div class="jumbotron">
+        <div id="film">
+          <div class="container">
+            <div style="display: flex">
+              <img src="../images/crab-02.svg" />
+              <div>
+                <h1>Board State<br/><small>A simple way to express complex states.</small></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <div id="mainContent" ng-controller="homeController">
+
+      <section>
+        <h2>Welcome <small>Thank you for using Board State</small></h2>
+        <button class="btn btn-primary btn-lg">Create a Board State</button>
+        <button class="btn btn-info btn-lg">Learn More</button>
+      </section>
+
+      <section class="flexItemMain">
+        <h2>News</h2>
+        <p>
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+        </p>
+        <p>
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+        </p>
+        <p>
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+        </p>
+        <p>
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+          This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
+        </p>
+      </section>
+
+      <section class="flexItemSide">
+        <h2>Popular Board States</h2>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <title>Popular Board States</title>
+            <thead>
+              <th>Category</th>
+              <th>Username</th>
+              <th>Date</th>
+            </thead>
+            <tr ng-repeat="popular in popularBS">
+              <td colspan="3">
+                <table class="table">
+                  <tr>
+                    <td colspan="3">
+                      <strong>{{popular.title}}</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="trContent">{{popular.category}}</td>
+                    <td class="trContent">{{popular.username}}</td>
+                    <td class="trContent">{{popular.date}}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
+      <section class="flexItemMain">
+        <h2>Contact Us</h2>
+        <p>Questions, comments or want to share something cool?  You can get in contact with us at any of these options!</p>
+      </section>
+
+      <section class="flexItemSide">
+        <h2>Recent Board States</h2>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <title>Popular Board States</title>
+            <thead>
+              <th>Category</th>
+              <th>Username</th>
+              <th>Date</th>
+            </thead>
+            <tr ng-repeat="recent in recentBS">
+              <td colspan="3">
+                <table class="table">
+                  <tr>
+                    <td colspan="3">
+                      <strong>{{recent.title}}</strong>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="trContent">{{recent.category}}</td>
+                    <td class="trContent">{{recent.username}}</td>
+                    <td class="trContent">{{recent.date}}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+
+    <script src="../vendors/angular.min.js" charset="utf-8"></script>
+    <script src="../scripts/home.js" charset="utf-8"></script>
+
+  </body>
+</html>

@@ -36,6 +36,7 @@
         ng-repeat="cardName in allCardNames | cardFilter: newCurrentZoneCard track by $index"
         class="suggestion"
         ng-click="selectZoneSuggestion(cardName)"
+        ng-if="cardName != newCurrentZoneCard"
         >
           {{cardName}}
         </li>

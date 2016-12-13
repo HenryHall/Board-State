@@ -1,0 +1,21 @@
+
+<div style="text-align: center">
+  <b>{{card.info.name}}</b>
+</div>
+
+<hr style="margin: 5px">
+
+<ul
+id="customContextMenu"
+ng-mouseleave="removeContextMenu($event)">
+
+  <li
+  ng-click="inspectCard(card.style['background-image'])"
+  >
+  Inspect</li>
+
+  <li
+  ng-click="duplicateOtherZoneCard($index)">
+  Duplicate</li>
+
+</ul>

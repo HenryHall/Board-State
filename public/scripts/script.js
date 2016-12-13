@@ -37,6 +37,9 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   $scope.states = [];
   $scope.currentState = 1;
 
+  $scope.toasts = [];
+  var toastId = 0;
+
 
   //If this is a preloaded state, get the data
   if($location.search().stateId !== undefined){
@@ -92,6 +95,9 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
         $scope.allCardNames.push($scope.allSets[set].cards[i].name);
       }
     }
+
+    //cardPortalInput is now ready to be used
+    document.getElementById('cardPortalInput').removeAttribute("readonly");
 
   });
 
@@ -168,7 +174,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
         var newToast = {
           type: "success",
           message: "Your state has been saved as state " + $scope.currentState + "!",
-          duration: 5
+          duration: 10
         };
 
         return toast(newToast);
@@ -185,7 +191,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     var newToast = {
       type: "success",
       message: "A new state has been saved!",
-      duration: 5
+      duration: 10
     };
 
     return toast(newToast);
@@ -196,38 +202,39 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   function toast(newToast){
     //accepts an object with three fields: type, message, duration(seconds)
 
+    var toastToPush = {};
     var newStyle;
     switch (newToast.type.toLowerCase()) {
       case 'success':
         newStyle = {
-          'background-color': 'rgb(223, 240, 216)',
+          'background-color': 'rgba(223, 240, 216, .75)',
           color: '#3c763d',
-          border: '5px solid #d6e9c6'
+          border: '2px solid #d6e9c6'
         };
         break;
 
       case 'info':
         newStyle = {
-          'background-color': 'rgb(218, 237, 247)',
+          'background-color': 'rgba(218, 237, 247, .75)',
           color: '#31708f',
-          border: '3px solid #bce8f1'
+          border: '2px solid #bce8f1'
         };
         break;
 
       case 'warning':
         newStyle = {
-          'background-color': 'rgb(252, 248, 227)',
+          'background-color': 'rgba(252, 248, 227, .75)',
           color: '#8a6d3b',
-          border: '3px solid #faebcc'
+          border: '2px solid #faebcc'
         };
         break;
 
 
       case 'danger':
         newStyle = {
-          'background-color': 'rgb(242, 222, 222)',
+          'background-color': 'rgba(242, 222, 222, .75)',
           color: '#a94442',
-          border: '3px solid #ebccd1'
+          border: '2px solid #ebccd1'
         };
         break;
 
@@ -240,20 +247,20 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
     }
 
-    $scope.toastStyle = newStyle
-    $scope.toastMessage = newToast.message;
-
-    //display the element
-    var alertToast = document.getElementById('alertToast');
-    alertToast.style.display = "block";
-    alertToast.style.opacity = 1;
-    alertToast.style.transition = 'opacity ' + newToast.duration + 's';
+    toastToPush.toastStyle = newStyle;
+    toastToPush.toastMessage = newToast.message;
+    toastToPush.id = toastId;
+    toastId++;
+    $scope.toasts.push(toastToPush);
 
     setTimeout(function(){
-      alertToast.style.display = "none";
+      for(var i=0; i<$scope.toasts.length; i++){
+        if($scope.toasts[i].id == toastToPush.id){
+          $scope.toasts.splice(i, 1);
+          $scope.$apply();
+        }
+      }
     }, (newToast.duration * 1000));
-
-    // alertToast.style.opacity = 0;
 
   }
 
@@ -264,7 +271,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     isStateSaved();
 
     if ($scope.uploadString){
-      toast({type: 'info', message: 'Your Board State has already been uploaded and can be viewed here:\nhttps://board-state.herokuapp.com/#/?stateId=' + $scope.uploadString, duration: 10});
+      toast({type: 'info', message: 'Your Board State has already been uploaded and can be viewed here:\nhttps://board-state.herokuapp.com/#/?stateId=' + $scope.uploadString, duration: 20});
       return;
     }
 
@@ -280,7 +287,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }).then(function(data){
       console.log(data.data);
       $scope.uploadString = data.data;
-      toast({type: 'success', message: 'Your state has been successfully uploaded!  You can view it here:\nhttps://board-state.herokuapp.com/#/?stateId=' + data.data, duration: 10});
+      toast({type: 'success', message: 'Your state has been successfully uploaded!  You can view it here:\nhttps://board-state.herokuapp.com/#/?stateId=' + data.data, duration: 20});
     });
 
   };
@@ -310,7 +317,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       if (statePrompt){
         $scope.saveState();
       } else {
-        toast({type: "warning", message: "State " + $scope.currentState + " was not saved.", duration: 3});
+        toast({type: "warning", message: "State " + $scope.currentState + " was not saved.", duration: 10});
         return false;
       }
     }
@@ -321,7 +328,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   $scope.previousState = function(){
 
     if ($scope.currentState - 1 < 1){
-      toast({type: 'warning', message: "There is no previous state!", duration: 3});
+      toast({type: 'warning', message: "There is no previous state!", duration: 10});
       return;
     }
 
@@ -366,7 +373,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }
 
     if(angular.equals(stateCheck, currentStateObject)){
-      toast({type: "warning", message: "There were no changes to this state from the previous.  The state was not changed.", duration: 3});
+      toast({type: "warning", message: "There were no changes to this state from the previous.  The state was not changed.", duration: 10});
       return;
     }
 
@@ -605,6 +612,14 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     document.getElementById('inspectModal').style.display = 'none';
   };
 
+  $scope.removeToast = function(toastId){
+    for(var i=0; i<$scope.toasts.length; i++){
+      if($scope.toasts[i].id == toastId){
+        $scope.toasts.splice(i, 1);
+      }
+    }
+  };
+
 
   $scope.setPT = function(index){
     var newPT = prompt("Set a new power and toughness.  Keep blank to return to default.", $scope.createdCardArray[index].powerToughness);
@@ -669,6 +684,14 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     newCardElement.powerToughness = $scope.createdCardArray[index].powerToughness;
     $scope.createdCardArray.push(newCardElement);
 
+  };
+
+
+  $scope.duplicateOtherZoneCard = function(index){
+    var newCardInfo = findCard($scope.currentZoneCards[index].info.name);
+    var newCardElement = createNewCardElement(newCardInfo);
+    $scope.currentZoneCards.push(newCardElement);
+    positionCurrentZoneCards();
   };
 
 
@@ -973,6 +996,10 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     controllerAs: 'createCardController',
     replace: true,
     link: function(scope, element, attrs){
+
+      //Set cardPortal input to readonly until card data is loaded
+      document.getElementById('cardPortalInput').setAttribute("readonly", "true");
+
       //Traverse the suggestions
       var index;
 
@@ -1048,6 +1075,20 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }
   }
 })
+.directive('otherZoneContextMenu', function(){
+  return {
+    restrict: 'E',
+    templateUrl: '../views/templates/otherZoneContextMenu.html',
+    link: function(scope, element, attrs){
+      element.on('mouseleave', function(){
+        element.remove();
+      });
+      element.on('click', function(){
+        element.remove();
+      });
+    }
+  }
+})
 .directive('ngRightClick', function($parse) {
     return function(scope, element, attrs) {
         var fn = $parse(attrs.ngRightClick);
@@ -1066,11 +1107,21 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
                 event.preventDefault();
 
                 var body = angular.element(document.body);
-                body.append(($compile('<custom-context-menu />')(scope)).addClass('customContextMenu').css({
-                  left: (event.pageX-10) + 'px',
-                  top: (event.pageY-10) + 'px',
-                  'z-index': 1001
-                }));
+
+                if (element.hasClass('createdCard')){
+                  body.append(($compile('<custom-context-menu />')(scope)).addClass('customContextMenu').css({
+                    left: (event.pageX-10) + 'px',
+                    top: (event.pageY-10) + 'px',
+                    'z-index': 1001
+                  }));
+                } else if (element.hasClass('currentZoneCard')){
+                  body.append(($compile('<other-zone-context-menu />')(scope)).addClass('customContextMenu').css({
+                    left: (event.pageX-10) + 'px',
+                    top: (event.pageY-10) + 'px',
+                    'z-index': 1001
+                  }));
+
+                }
 
             });
         });

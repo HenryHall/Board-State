@@ -1,0 +1,63 @@
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+.jumbotron {
+  background-image: url(http://magic.wizards.com/sites/mtg/files/images/featured/SIO_Header_New_Preloader.jpg);
+  background-position-x: 60%;
+}
+
+#film {
+  background-color: rgba(157, 157, 157, 0.5);
+}
+
+.jumbotron small {
+  color: rgb(205, 70, 46);
+}
+
+#mainContent {
+  width: 75vw;
+  margin-left: 12.5vw;
+}
+
+section {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+section h1 {
+  margin: 0px;
+}
+
+.flexItemRow {
+  display: block;
+  width: 100%;
+}
+
+.flexItemSide button {
+  margin: auto;
+}
+
+.flexItemMain {
+  display: inline-block;
+  width: 55%;
+}
+
+.flexItemSide {
+  display: inline-block;
+  width: 43%;
+  float: right;
+}
+
+.trContent {
+  border-top: none !important;
+  padding-left: 8px;
+  width: 33%;
+  text-align: center;
+}
+
+table td {
+  padding: 0px !important;
+}

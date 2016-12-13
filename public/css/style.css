@@ -92,6 +92,7 @@ body {
   min-height: 700px;
   width: 150px;
   background-color: rgba(149, 149, 149, .5);
+  border-right: 1px solid grey;
 }
 
 #gameStats section {
@@ -261,17 +262,22 @@ body {
   border-radius: 5%;
 }
 
-#alertToast {
-  display: none;
-  position: absolute;
+.alertToast {
+  position: relative;
   z-index: 3000;
-  width: 75%;
+  width: 50%;
   top: 20px;
-  left: 12.5vw;
-  font-size: 3em;
+  left: 25vw;
+  font-size: 2em;
   text-align: center;
   border-radius: 15px;
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+.removeToastButton:hover {
+  color: rgba(255, 0, 0, 0.75);
 }
 
 .createdCard {

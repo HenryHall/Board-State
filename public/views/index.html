@@ -63,9 +63,17 @@
         <div id="inspectCardImage"></div>
       </div>
 
-      <div id="alertToast" ng-style="toastStyle">
-        {{toastMessage}}
+      <div ng-repeat="toast in toasts">
+
+        <div class="alertToast" ng-style="toast.toastStyle">
+          {{toast.toastMessage}}
+          <span class="removeToastButton" style="float:right; margin-left: 10px; width: 30px;" ng-click="removeToast(toast.id)">
+            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+          </span>
+        </div>
+
       </div>
+
 
 
     </div>
