@@ -45,6 +45,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   if($location.search().stateId !== undefined){
 
     var boardStateParams = $location.search().stateId;
+    $scope.uploadString = boardStateParams;
     console.log("Sending:", boardStateParams);
     $http({
       method: 'GET',
@@ -52,12 +53,21 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }).then(function(data){
       $scope.states = data.data.allStates;
 
+      $scope.bStateTitle = data.data.info.title;
+      $scope.bStateUsername = data.data.info.username;
+      $scope.bStateCategory = data.data.info.category;
+      $scope.bStateDescription = data.data.info.description;
+      $scope.bStateDate = data.data.info.date;
+
+      document.getElementById('cardPortal').style.display = 'none';
+
+
       for (var i=0; i<$scope.states.length; i++){
         //Save the state
         $scope.createdCardArray = $scope.states[i].createdCardArray;
         $scope.gameStats = $scope.states[i].gameStats;
         $scope.currentState = $scope.states[i].stateNumber;
-        saveState();
+        $scope.saveState();
       }
 
       for (var i=0; i<$scope.states.length; i++){
@@ -71,6 +81,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
           if($scope.gameStats.description){
             document.getElementById('stateDescription').style.bottom = '0px';
           }
+          toast({type: "Success", message: "Board State Successfuly Loaded!", duration: 3});
+          document.getElementById('infoModal').style.display = 'block';
           return;
         }
       }
@@ -98,6 +110,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
     //cardPortalInput is now ready to be used
     document.getElementById('cardPortalInput').removeAttribute("readonly");
+
+    toast({type: "Success", message: "Card Data Successfuly Loaded!", duration: 3});
 
   });
 
@@ -174,7 +188,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
         var newToast = {
           type: "success",
           message: "Your state has been saved as state " + $scope.currentState + "!",
-          duration: 10
+          duration: 3
         };
 
         return toast(newToast);
@@ -191,7 +205,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     var newToast = {
       type: "success",
       message: "A new state has been saved!",
-      duration: 10
+      duration: 3
     };
 
     return toast(newToast);
@@ -270,26 +284,55 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     //Make sure the state is saved
     isStateSaved();
 
-    if ($scope.uploadString){
-      toast({type: 'info', message: 'Your Board State has already been uploaded and can be viewed here:\nhttps://board-state.herokuapp.com/#/?stateId=' + $scope.uploadString, duration: 20});
-      return;
-    }
+    document.getElementById('saveModal').style.display = "block";
+  };
+
+
+  $scope.showInfoModal = function(){
+    document.getElementById('infoModal').style.display = "block";
+  };
+
+
+  $scope.saveFinishConfirm = function(){
 
     var confirmSaveAndFinish = confirm('Are you sure you would like to finish and upload your states?  Once you do this you cannot edit it.');
     if (!confirmSaveAndFinish) {
       return;
     }
 
+    var newData = {
+      allStates: $scope.states,
+      info: {
+        title: $scope.bStateTitle,
+        username: $scope.bStateUsername,
+        category: $scope.bStateCategory,
+        description: $scope.bStateDescription
+      }
+    }
+
     $http({
       method: 'POST',
       url: '/saveStates',
-      data: $scope.states
+      data: newData
     }).then(function(data){
       console.log(data.data);
       $scope.uploadString = data.data;
-      toast({type: 'success', message: 'Your state has been successfully uploaded!  You can view it here:\nhttps://board-state.herokuapp.com/#/?stateId=' + data.data, duration: 20});
+      toast({type: 'success', message: 'Your state has been successfully uploaded!', duration: 3});
     });
 
+    document.getElementById('saveModal').style.display = 'none';
+    document.getElementById('infoModal').style.display = 'block';
+
+  };
+
+
+  $scope.closeSaveModal = function(){
+    document.getElementById('saveModal').style.display = 'none';
+  };
+
+
+  $scope.closeInfoModal = function(){
+    document.getElementById('infoModal').style.display = 'none';
   };
 
 
@@ -317,7 +360,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       if (statePrompt){
         $scope.saveState();
       } else {
-        toast({type: "warning", message: "State " + $scope.currentState + " was not saved.", duration: 10});
+        toast({type: "warning", message: "State " + $scope.currentState + " was not saved.", duration: 5});
         return false;
       }
     }
@@ -328,7 +371,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   $scope.previousState = function(){
 
     if ($scope.currentState - 1 < 1){
-      toast({type: 'warning', message: "There is no previous state!", duration: 10});
+      toast({type: 'warning', message: "There is no previous state!", duration: 3});
       return;
     }
 
@@ -373,7 +416,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
     }
 
     if(angular.equals(stateCheck, currentStateObject)){
-      toast({type: "warning", message: "There were no changes to this state from the previous.  The state was not changed.", duration: 10});
+      toast({type: "warning", message: "There were no changes to this state from the previous.  The state was not changed.", duration: 5});
       return;
     }
 

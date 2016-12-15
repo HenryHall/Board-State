@@ -4,6 +4,9 @@ var myApp = angular.module('myApp', []);
 myApp.controller('homeController', ['$scope', '$http', function($scope, $http){
   console.log("here");
 
+  //DO THIS
+  $scope.tutorialLink = "NotMadeYet";
+
   $scope.popularBS = [
     {
       title: 'Tarmogoyf and Lightning Bolt',

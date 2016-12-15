@@ -9,15 +9,22 @@ var db = require('../server/modules/connection.js');
 app.use( bodyParser.json() );
 app.use( express.static( 'public' ) );
 
-app.get( '/', function( req, res ){
-  console.log( 'Home base' );
-  res.sendFile( path.resolve( 'public/views/index.html' ) );
-});
-
 
 app.set('port', process.env.PORT || 3000);
 app.listen(app.get('port'), function() {
   console.log('Server up:', app.get('port'));
+});
+
+
+app.get( '/', function( req, res ){
+  console.log( 'Home base' );
+  res.sendFile( path.resolve( 'public/views/home.html' ) );
+});
+
+
+app.get( '/new', function( req, res ){
+  console.log( 'Board State Creation' );
+  res.sendFile( path.resolve( 'public/views/index.html' ) );
 });
 
 

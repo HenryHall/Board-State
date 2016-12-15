@@ -14,7 +14,8 @@ router.post('/', function(req, res){
   console.log("In /saveStates");
 
     var newStates = new BoardState({
-      allStates: req.body
+      allStates: req.body.allStates,
+      info: req.body.info
     });
 
     var newHashedId;

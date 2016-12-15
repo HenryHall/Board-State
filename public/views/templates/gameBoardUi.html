@@ -11,8 +11,12 @@
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
     </button>
 
-    <button class="btn btn-default" title="Save and Finish" ng-click="saveFinish()">
+    <button class="btn btn-default" title="Save and Finish" ng-click="saveFinish()" ng-if="!uploadString">
       <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>
+    </button>
+
+    <button class="btn btn-default" title="Information" ng-click="showInfoModal()" ng-if="uploadString">
+      <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
     </button>
   </section>
 

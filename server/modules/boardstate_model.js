@@ -7,7 +7,14 @@ var boardStateSchema = new Schema({
       createdCardArray: Array,
       gameStats: {}
     }],
-    hashed_id: String
+    hashed_id: String,
+    info: {
+      title: String,
+      username: String,
+      category: String,
+      description: String,
+      date: {type: Date, default: Date.now}
+    }
   });
 
   module.exports = mongoose.model('BoardState', boardStateSchema);

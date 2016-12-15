@@ -63,6 +63,69 @@
         <div id="inspectCardImage"></div>
       </div>
 
+      <div id="saveModal">
+        <div id="saveBox">
+          <h2>Save and Finish</h2>
+
+          <div class="input-group">
+            <span class="input-group-addon" id="saveModal-addon1">Submitted By: ({{bStateUsername.length}}/25)</span>
+            <input ng-model="bStateUsername" type="text" class="form-control" placeholder="Username" aria-describedby="saveModal-addon1">
+          </div>
+
+          <div class="input-group">
+            <span class="input-group-addon" id="saveModal-addon2">Board State Title: ({{bStateTitle.length}}/50)</span>
+            <input ng-model="bStateTitle" type="text" class="form-control" placeholder="Title" aria-describedby="saveModal-addon2">
+          </div>
+
+
+          <label>Category:</label>
+          <br>
+          <select ng-model="bStateCategory" class="form-control">
+            <option value="Rules Question">Rules Question</option>
+            <option value="Anecdote">Anecdote</option>
+            <option value="Other">Other</option>
+          </select>
+          <br>
+
+          <div style="padding: 10px">
+            <label>Description: ({{bStateDescription.length}}/140)</label>
+            <textarea ng-model="bStateDescription" placeholder="140 character limit" class="form-control"></textarea>
+          </div>
+
+          <div id="saveBoxButtons">
+            <button ng-click="saveFinishConfirm()" class="btn btn-lg btn-primary">Save</button>
+            <button ng-click="closeSaveModal()" class="btn btn-lg btn-danger">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="infoModal">
+        <div id="infoModalBox">
+
+            <h2>{{bStateTitle}} <small>{{bStateDate | date:'shortDate'}}</small></h2>
+
+            <div class="input-group">
+              <span class="input-group-addon" id="infoModalBox-addon1">Submitted By: </span>
+              <input type="text" class="form-control" readonly aria-describedby="infoModalBox-addon1" value="{{bStateUsername}}">
+            </div>
+
+            <div class="input-group">
+              <span class="input-group-addon" id="infoModalBox-addon2">Link: </span>
+              <input type="text" class="form-control" readonly aria-describedby="infoModalBox-addon2" value="https://board-state.herokuapp.com/new/#/?stateId={{uploadString}}">
+            </div>
+
+            <div style="padding: 10px">
+              <label>Description: </label>
+              <textarea class="form-control" readonly>{{bStateDescription}}</textarea>
+            </div>
+
+            <div id="infoModalBoxButtons">
+              <button ng-click="closeInfoModal()" class="btn btn-lg btn-danger">Close</button>
+            </div>
+
+        </div>
+      </div>
+
       <div ng-repeat="toast in toasts">
 
         <div class="alertToast" ng-style="toast.toastStyle">
@@ -73,7 +136,6 @@
         </div>
 
       </div>
-
 
 
     </div>
