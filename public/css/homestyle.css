@@ -1,10 +1,13 @@
 
 body {
   background-color: rgb(255, 255, 255);
+  background-image: url('http://www.wildtextures.com/wp-content/uploads/wildtextures-leather-Campo-black.jpg');
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .jumbotron {
-  background-image: url(http://magic.wizards.com/sites/mtg/files/images/featured/SIO_Header_New_Preloader.jpg);
+  background-image: url('http://magic.wizards.com/sites/mtg/files/images/featured/SIO_Header_New_Preloader.jpg');
   background-position-x: 60%;
 }
 
@@ -17,18 +20,26 @@ body {
 }
 
 #mainContent {
-  width: 75vw;
-  margin-left: 12.5vw;
+  width: 85vw;
+  margin-left: 7.5vw;
 }
 
 section {
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid black;
+  padding: 20px;
+  border: 1px solid rgb(171, 171, 171);
+  border-radius: 5px;
+  background-color: #f0f8ff;
 }
 
-section h1 {
+section h2 {
   margin: 0px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.btn-container {
+  text-align: center;
 }
 
 .flexItemRow {
@@ -36,19 +47,20 @@ section h1 {
   width: 100%;
 }
 
-.flexItemSide button {
-  margin: auto;
-}
-
 .flexItemMain {
   display: inline-block;
-  width: 55%;
+  width: 62%;
 }
 
 .flexItemSide {
   display: inline-block;
-  width: 43%;
+  width: 36%;
   float: right;
+}
+
+.tableTitle {
+  text-align: center;
+  text-decoration: underline;
 }
 
 .trContent {
@@ -60,4 +72,5 @@ section h1 {
 
 table td {
   padding: 0px !important;
+  background-color: #f0f8ff;
 }
