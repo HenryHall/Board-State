@@ -300,6 +300,21 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       return;
     }
 
+    //Make sure the form is valid
+    if ($scope.bStateTitle.length > 50){
+      toast({type: 'Danger', message: 'Your title is too long.', duration: 5});
+      return;
+    } else if ($scope.bStateUsername.length > 25){
+      toast({type: 'Danger', message: 'Your username is too long.', duration: 5});
+      return;
+    } else if (!$scope.bStateCategory) {
+      toast({type: 'Danger', message: 'Please select a category.', duration: 5});
+      return;
+    } else if ($scope.bStateDescription.length > 300) {
+      toast({type: 'Danger', message: 'Your description is too long.', duration: 5});
+      return;
+    }
+
     var newData = {
       allStates: $scope.states,
       info: {

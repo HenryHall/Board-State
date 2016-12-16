@@ -299,6 +299,10 @@ body {
   margin-right: 20%;
 }
 
+#infoModalBox h2 {
+  word-wrap: break-word;
+}
+
 #infoModalBoxButtons {
   text-align: center;
   margin-top: 15px;
