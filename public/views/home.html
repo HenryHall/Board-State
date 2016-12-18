@@ -103,7 +103,7 @@
               </thead>
               <tr ng-repeat="popular in popularBS">
                 <td colspan="3">
-                  <a href="#">
+                  <a href="{{url}}{{popular.hash}}">
                     <table class="table">
                       <tr>
                         <td colspan="3" class="tableTitle">
@@ -113,7 +113,7 @@
                       <tr>
                         <td class="trContent">{{popular.category}}</td>
                         <td class="trContent">{{popular.username}}</td>
-                        <td class="trContent">{{popular.date}}</td>
+                        <td class="trContent">{{popular.date | date:'shortDate'}}</td>
                       </tr>
                     </table>
                   </a>
@@ -135,7 +135,7 @@
               </thead>
               <tr ng-repeat="recent in recentBS">
                 <td colspan="3">
-                  <a href="#">
+                  <a href="{{url}}{{recent.hash}}">
                     <table class="table">
                       <tr>
                         <td colspan="3" class="tableTitle">
@@ -145,7 +145,7 @@
                       <tr>
                         <td class="trContent">{{recent.category}}</td>
                         <td class="trContent">{{recent.username}}</td>
-                        <td class="trContent">{{recent.date}}</td>
+                        <td class="trContent">{{recent.date | date:'shortDate'}}</td>
                       </tr>
                     </table>
                   </a>

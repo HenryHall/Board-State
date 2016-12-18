@@ -51,6 +51,13 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       method: 'GET',
       url: '/boardStates/' + boardStateParams
     }).then(function(data){
+
+      if (data.status == 204){
+        //There was no board state found with that hash
+        toast({type: 'Danger', message: "There was no Board State found with this url.", duration: 30});
+        return;
+      }
+
       $scope.states = data.data.allStates;
 
       $scope.bStateTitle = data.data.info.title;
@@ -660,15 +667,26 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   };
 
 
-  $scope.inspectCard = function(backgroundUrl){
+  $scope.inspectCard = function(card){
+    $scope.inspectModalInfo = card.info;
     document.getElementById('inspectModal').style.display = 'block';
-    document.getElementById('inspectCardImage').style.backgroundImage = backgroundUrl;
+    document.getElementById('inspectCardImage').style.backgroundImage = card.style['background-image'];
   };
 
 
   $scope.closeInspect = function(){
     document.getElementById('inspectModal').style.display = 'none';
   };
+
+
+  $scope.fixInspectText = function(text){
+    if (text) {
+      return text.replace(/↵/g, /n/);
+    } else {
+      return "Waiting on inspect."
+    }
+  };
+
 
   $scope.removeToast = function(toastId){
     for(var i=0; i<$scope.toasts.length; i++){

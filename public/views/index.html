@@ -61,6 +61,36 @@
 
       <div id="inspectModal" ng-click="closeInspect()">
         <div id="inspectCardImage"></div>
+        <div id="inspectCardInfo">
+          <h2>{{inspectModalInfo.name}} <small style="float: right">{{inspectModalInfo.manaCost}}</small></h2>
+          <strong>
+            {{inspectModalInfo.type}}
+            <span id="inspectModalPrintingHover">{{inspectModalInfo.printings[0]}}</span>
+            <div id="inspectModalPrintings">
+              <h3>All Printings:</h3>
+              <div ng-repeat="printing in inspectModalInfo.printings">
+                {{printing}}
+                <br />
+              </div>
+            </div>
+          </strong>
+          <br>
+          <div id="inspectModalText">{{fixInspectText(inspectModalInfo.text)}}</div>
+          <br>
+
+          <span
+          ng-if="inspectModalInfo.type.indexOf('Creature') != -1 || inspectModalInfo.type.indexOf('Vehicle') != -1"
+          style="float: right">
+            ({{inspectModalInfo.power}}/{{inspectModalInfo.toughness}})
+          </span>
+
+          <span
+          ng-if="inspectModalInfo.type.indexOf('Planeswalker') != -1"
+          style="float: right">
+          ({{inspectModalInfo.loyalty}})
+          </span>
+
+        </div>
       </div>
 
       <div id="saveModal">

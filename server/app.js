@@ -30,7 +30,8 @@ app.get( '/new', function( req, res ){
 
 var saveStates = require ('../server/modules/saveStates.js');
 var boardStates = require ('../server/modules/boardStates.js');
+var homeData = require ('../server/modules/homeData.js');
 
-//Used for saving
 app.use('/saveStates', saveStates);
 app.use('/boardStates', boardStates);
+app.use('/homeData', homeData);

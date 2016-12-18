@@ -11,15 +11,23 @@ var BoardState = require('./boardstate_model.js');
 router.get('/:boardStateId', function(req, res){
 
   var boardStateId = req.params.boardStateId;
-  console.dir(boardStateId);
   console.log("in /boardStates with:", boardStateId);
 
   // Find the boardState by Id
-  BoardState.findOne({hashed_id: boardStateId})
-  .then(function(data){
-    res.send(data);
-    console.log("data", data);
-  });
+  BoardState.findOneAndUpdate(
+    {hashed_id: boardStateId},
+    {$inc: {"info.popularity": 1} },
+    {new: true},
+    function(err, doc){
+      if(err || doc == null){
+        console.log("Oops", err);
+        res.sendStatus(204);
+      } else {
+        console.log(doc);
+        res.send(doc);
+      }
+    }
+  );
 
 
 });

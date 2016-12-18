@@ -253,13 +253,46 @@ body {
 #inspectCardImage {
   position: absolute;
   top: 5vh;
-  left: calc((100vw - 65vh)/2);
+  left: calc((100vw - (65vh + 40vw))/2);
   height: 90vh;
   width: 65vh;
   background-color: rgb(0, 0, 0);
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 5%;
+}
+
+#inspectCardInfo {
+  position: absolute;
+  top: 5vh;
+  left: calc(calc((100vw - (65vh + 40vw))/2) + 65vh + 5vw);
+  width: 35vw;
+  padding: 20px;
+  background-color: #f0f8ff;
+  border-radius: 15px;
+}
+
+#inspectModalPrintings {
+  display: none;
+  float: right;
+  height: 50vh;
+  overflow: auto;
+}
+
+#inspectModalPrintings:hover {
+  display: block;
+}
+
+#inspectModalPrintingHover {
+  float: right;
+}
+
+#inspectModalPrintingHover:hover + #inspectModalPrintings {
+  display: block;
+}
+
+#inspectModalText {
+  white-space: pre-wrap;
 }
 
 #saveBox, #infoModalBox {
@@ -301,6 +334,7 @@ body {
 
 #infoModalBox h2 {
   word-wrap: break-word;
+  padding-left: 10px;
 }
 
 #infoModalBoxButtons {
@@ -366,6 +400,19 @@ body {
 }
 
 .createdCard .loyalty {
+  background-image: url('../images/mtgPT.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 40px;
+  height: 20px;
+  float: right;
+  position: relative;
+  top: 75%;
+  right: 5%;
+  text-align: center;
+}
+
+/*.createdCard .loyalty {
   background-color: rgb(221, 221, 221);
   display: inline-block;
   height: 15px;
@@ -389,7 +436,7 @@ body {
   top: 15px;
   width: 0;
   transform: rotate(180deg);
-}
+}*/
 
 .customContextMenu {
   position: absolute;

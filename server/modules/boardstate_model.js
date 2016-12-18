@@ -13,6 +13,7 @@ var boardStateSchema = new Schema({
       username: String,
       category: String,
       description: String,
+      popularity: {type: Number, default: 0},
       date: {type: Date, default: Date.now}
     }
   });
