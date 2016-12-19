@@ -389,7 +389,7 @@ body {
   color: rgb(237, 27, 27);
 }
 
-.createdCard .powerToughness {
+/*.createdCard .powerToughness {
   float: right;
   background-color: rgb(221, 221, 221);
   border-radius: 5px;
@@ -397,9 +397,9 @@ body {
   top: 75%;
   right: 5%;
   padding: 2px;
-}
+}*/
 
-.createdCard .loyalty {
+.createdCard .loyalty, .createdCard .powerToughness {
   background-image: url('../images/mtgPT.png');
   background-repeat: no-repeat;
   background-size: cover;

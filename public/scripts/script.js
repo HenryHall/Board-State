@@ -102,6 +102,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   $http({
     method: 'GET',
     url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
+    // url: '/cardData'
   })
   .then(function(data){
     $scope.allSets = data.data;
