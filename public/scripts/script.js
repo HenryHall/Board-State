@@ -99,9 +99,11 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
 
   //Load the card data
+  toast({type: "Warning", message: "Loading Card Data...", duration: 5});
   $http({
     method: 'GET',
-    url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
+    // url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
+    url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets-x.json'
     // url: '/cardData'
   })
   .then(function(data){
@@ -565,8 +567,19 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
     newCard.uniqueID = $scope.uniqueID++;
     newCard.info = cardInfo;
+    newCard.tapped = false;
 
-    if(newCard.info.layout == "double-faced"){
+    newCard.style = {
+      "background-image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
+      "background-size": "cover",
+      "background-color": "trasnparent",
+      height: '155px',
+      width: '111px',
+      'z-index': 100
+    };
+
+
+    if(cardInfo.layout == "double-faced"){
       newCard.night = {};
       newCard.night.info = getCardInfo(newCard.info.names[1]);
       newCard.night.uniqueID = $scope.uniqueID;
@@ -591,14 +604,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       newCard.night.tapped = false;
     }
 
-    newCard.style = {
-      "background-image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
-      "background-size": "cover",
-      "background-color": "trasnparent",
-      height: '155px',
-      width: '111px',
-      'z-index': 100
-    };
+
 
     if(cardInfo.types.indexOf("Creature") != -1) {
       newCard.powerToughness = cardInfo.power + "/" + cardInfo.toughness;
@@ -611,7 +617,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
       newCard.loyalty = cardInfo.loyalty;
     }
 
-    newCard.tapped = false;
     return newCard;
   }//End createNewCardElement
 
@@ -683,8 +688,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   $scope.fixInspectText = function(text){
     if (text) {
       return text.replace(/↵/g, /n/);
-    } else {
-      return "Waiting on inspect."
     }
   };
 
@@ -1082,7 +1085,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
       scope.$on('form:submit', function(){
         //Form was submitted
-        console.log("Form submitted");
         index = undefined;
         document.getElementById('suggestions').style.display = 'none';
       });
