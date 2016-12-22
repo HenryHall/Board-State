@@ -1,13 +1,13 @@
 <div id="gameBoardUi">
 
   <section>
-    <button class="btn btn-default" ng-click="clearBoard()" title="Clear Current State">
+    <button class="btn btn-default" ng-click="clearBoard()" title="Clear Current State" ng-if="!uploadString">
       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
     </button>
   </section>
 
   <section>
-    <button class="btn btn-default" title="Save State" ng-click="saveState()">
+    <button class="btn btn-default" title="Save State" ng-click="saveState()" ng-if="!uploadString">
       <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
     </button>
 
