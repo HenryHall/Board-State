@@ -7,10 +7,11 @@
       <h1>{{currentPlayer}} {{currentZone}}</h1>
       <br/>
 
-      <form ng-submit="createNewCurrentZone()">
+      <form ng-submit="createNewCurrentZone()" ng-keydown="currentZoneSuggestion($event)">
         <div class="input-group">
 
           <input
+          id="currentZoneInput"
           class="form-control"
           type="text"
           ng-model="newCurrentZoneCard"
@@ -29,18 +30,20 @@
           </span>
 
         </div>
+
+        <ul id="otherZoneSuggestions">
+          <li
+          ng-repeat="cardName in allCardNames | cardFilter: newCurrentZoneCard track by $index"
+          class="otherZonesSuggestion"
+          ng-click="selectZoneSuggestion(cardName)"
+          ng-if="cardName != newCurrentZoneCard"
+          >
+            <a href="#">{{cardName}}</a>
+          </li>
+        </ul>
+
       </form>
 
-      <ul id="suggestions">
-        <li
-        ng-repeat="cardName in allCardNames | cardFilter: newCurrentZoneCard track by $index"
-        class="suggestion"
-        ng-click="selectZoneSuggestion(cardName)"
-        ng-if="cardName != newCurrentZoneCard"
-        >
-          {{cardName}}
-        </li>
-      </ul>
 
       <button ng-click="clearCurrentZone()" class="btn btn-warning" style="width: 45%">
         Empty {{currentZone}}

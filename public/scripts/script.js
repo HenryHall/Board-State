@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', []);
 
 var currentZoom = 1;
 
-myApp.controller('createCardController', ['$scope', '$http', '$location', function($scope, $http, $location){
+myApp.controller('createCardController', ['$scope', '$http', '$location', '$window', function($scope, $http, $location, $window){
 
   //Initialize data
   $scope.allSets = {};
@@ -621,6 +621,15 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   }//End createNewCardElement
 
 
+  $scope.goHome = function(){
+    var confirmation = confirm("Are you sure you would like to return to the homepage?");
+
+    if (confirmation == true){
+      $window.location.href = "/";
+    }
+  }
+
+
   $scope.clearBoard = function(){
     var confirmClear;
     if($scope.createdCardArray.length == 0){
@@ -738,6 +747,44 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
   };
 
 
+  $scope.setRedCounters = function(card){
+    var promptMessage = "Set the amount of red counters you would like on " + card.name + ". (0-99)"
+    var redCounterPrompt = prompt(promptMessage);
+
+    //Validate
+    if (typeof parseInt(redCounterPrompt) != 'number' || parseInt(redCounterPrompt) > 99 || parseInt(redCounterPrompt) < 0){
+      alert("Please enter a number 0-99.");
+      return;
+    }
+
+    if (redCounterPrompt == 0){
+      card.redCounters = undefined;
+    } else {
+      card.redCounters = redCounterPrompt;
+    }
+
+  };
+
+
+  $scope.setBlueCounters = function(card){
+    var promptMessage = "Set the amount of blue counters you would like on " + card.name + ". (0-99)"
+    var blueCounterPrompt = prompt(promptMessage);
+
+    //Validate
+    if (typeof parseInt(blueCounterPrompt) != 'number' || parseInt(blueCounterPrompt) > 99 || parseInt(blueCounterPrompt) < 0){
+      alert("Please enter a number 0-99.");
+      return;
+    }
+
+    if (blueCounterPrompt == 0){
+      card.blueCounters = undefined;
+    } else {
+      card.blueCounters = blueCounterPrompt;
+    }
+
+  };
+
+
   $scope.moveCardUp = function(index){
     if(!$scope.createdCardArray[index].style['z-index']){
       $scope.createdCardArray[index].style['z-index'] = 100;
@@ -792,6 +839,55 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', functi
 
   $scope.decrementOpponent = function(){
     $scope.gameStats.opponent.life--;
+  };
+
+
+  $scope.currentZoneSuggestion = function(event){
+
+    document.getElementById('otherZoneSuggestions').style.display = "block";
+
+    var keyPress = event.which;
+    console.log(event.which);
+    var suggestions = document.querySelectorAll('.otherZonesSuggestion a');
+
+    var index = -1;
+    for (var i=0; i<suggestions.length; i++){
+      if (document.activeElement == suggestions[i]){
+        index = i;
+      }
+    }
+    console.log(index);
+
+    if (suggestions.length !== 0){
+
+      if(keyPress == 9 || keyPress == 40){
+        //Tab or down arrow key
+        if (suggestions[index + 1]) {
+          index++;
+        } else {
+          index = 0;
+        }
+        //Prevent tabbing to new element
+        event.preventDefault();
+        suggestions[index].focus();
+      } else if(keyPress == 38){
+        //Up arrow
+        if(suggestions[index - 1]){
+          index--;
+          suggestions[index].focus();
+        } else {
+          index = suggestions.length - 1;
+          suggestions[index].focus();
+        }
+      } else if (keyPress == 13 && $scope.newCurrentZoneCard != suggestions[index].innerHTML){
+        //Enter key
+        $scope.newCurrentZoneCard = suggestions[index].innerHTML;
+        document.getElementById('currentZoneInput').focus();
+        document.getElementById('otherZoneSuggestions').style.display = "none";
+      }
+    }
+
+
   };
 
 

@@ -35,6 +35,8 @@
           <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
           <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
           <span ng-if="card.loyalty" class="loyalty">{{card.loyalty}}</span>
+          <span class="redCounter" ng-if="card.redCounters">{{card.redCounters}}</span>
+          <span class="blueCounter" ng-if="card.blueCounters">{{card.blueCounters}}</span>
         </div>
 
         <div id="gameBoardOpponent"></div>
@@ -113,6 +115,7 @@
           <select ng-model="bStateCategory" class="form-control">
             <option value="Rules Question">Rules Question</option>
             <option value="Anecdote">Anecdote</option>
+            <option value="Puzzle">Puzzle</option>
             <option value="Other">Other</option>
           </select>
           <br>

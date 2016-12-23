@@ -15,7 +15,7 @@ myApp.controller('homeController', ['$scope', '$http', function($scope, $http){
     url: '/homeData'
   }).then(function(data){
     data = data.data;
-    console.log(data.newest);
+    console.log(data);
 
     for (var i=0; i<data.newest.length; i++){
       data.newest[i].info.hash = data.newest[i].hashed_id;
