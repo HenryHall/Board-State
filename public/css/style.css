@@ -21,7 +21,6 @@ body {
   position: absolute;
   z-index: 1000;
   text-align: center;
-  border: 1px solid black;
   height: 115px;
   width: 300px;
   border: 1px solid grey;
@@ -107,7 +106,6 @@ body {
 }
 
 #theStack {
-  height: 5vh;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -401,16 +399,6 @@ body {
   color: rgb(237, 27, 27);
 }
 
-/*.createdCard .powerToughness {
-  float: right;
-  background-color: rgb(221, 221, 221);
-  border-radius: 5px;
-  position: relative;
-  top: 75%;
-  right: 5%;
-  padding: 2px;
-}*/
-
 .createdCard .loyalty, .createdCard .powerToughness {
   background-image: url('../images/mtgPT.png');
   background-repeat: no-repeat;
@@ -445,32 +433,6 @@ body {
   background-color: rgb(112, 131, 255);
   border-radius: 25%;
 }
-
-/*.createdCard .loyalty {
-  background-color: rgb(221, 221, 221);
-  display: inline-block;
-  height: 15px;
-  position: relative;
-  width: 25px;
-  top: 79%;
-  left: 74%;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  text-align: center;
-}
-
-.createdCard .loyalty:before {
-  border-bottom: 5px solid rgb(221, 221, 221);
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  content: "";
-  height: 0;
-  left: 0;
-  position: absolute;
-  top: 15px;
-  width: 0;
-  transform: rotate(180deg);
-}*/
 
 .customContextMenu {
   position: absolute;

@@ -20,6 +20,10 @@ body {
   color: rgb(205, 70, 46);
 }
 
+.navbar-nav>li {
+  float: none;
+}
+
 #mainContent {
   width: 85vw;
   margin-left: 7.5vw;
@@ -43,6 +47,7 @@ section h2 {
   text-align: center;
 }
 
+/*Home*/
 .flexItemRow {
   display: block;
   width: 100%;
@@ -74,4 +79,85 @@ section h2 {
 table td {
   padding: 0px !important;
   background-color: #f0f8ff;
+}
+
+
+/*Quick Start*/
+
+.flexDiv {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.paragraph {
+  margin-left: 20px;
+  font-size: 1.25em;
+}
+
+#cardPortal {
+  text-align: center;
+  height: 115px;
+  width: 300px;
+  border: 1px solid grey;
+  border-radius: 15px;
+  background-color: rgba(207, 207, 207, 0.5);
+}
+
+#cardPortalInput {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.tapped {
+  transform: rotate(90deg);
+}
+
+.createdCard {
+  position: relative;
+  border-radius: 10px;
+  padding-top: 50px;
+  transition: transform .5s;
+  box-shadow: 3px 3px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.createdCard .removeCard {
+  position: absolute;
+  bottom: 0%;
+  border: none;
+  border-radius: 3px;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+.createdCard .removeCard:hover {
+  background-color: rgb(0, 0, 0);
+  color: rgb(237, 27, 27);
+}
+
+.createdCard .loyalty, .createdCard .powerToughness {
+  background-image: url('../images/mtgPT.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 40px;
+  height: 20px;
+  float: right;
+  position: relative;
+  top: 75%;
+  right: 5%;
+  text-align: center;
+}
+
+#contextMenuImage, #gameStatsImage {
+  height: 175px;
+}
+
+#gameBoardUibutton {
+  background-color: transparent;
+  border: none;
+}
+
+#gameBoardUibutton:hover {
+  background-color: rgb(205, 205, 205);
 }

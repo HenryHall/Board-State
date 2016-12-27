@@ -1173,7 +1173,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 .directive('cardPortal', function(){
   return {
     restrict: 'E',
-    templateUrl: '../views/templates/cardPortal.html',
+    templateUrl: '../views/templates/boardState/cardPortal.html',
     controllerAs: 'createCardController',
     replace: true,
     link: function(scope, element, attrs){
@@ -1231,20 +1231,20 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 .directive('gameBoardUi', function(){
   return {
     restrict: 'E',
-    templateUrl: '../views/templates/gameBoardUi.html',
+    templateUrl: '../views/templates/boardState/gameBoardUi.html',
     controllerAs: 'createCardController'
   }
 })
 .directive('gameStats', function(){
   return {
     restrict: 'E',
-    templateUrl: '../views/templates/gameStats.html'
+    templateUrl: '../views/templates/boardState/gameStats.html'
   }
 })
 .directive('customContextMenu', function(){
   return {
     restrict: 'E',
-    templateUrl: '../views/templates/customContextMenu.html',
+    templateUrl: '../views/templates/boardState/customContextMenu.html',
     link: function(scope, element, attrs){
       element.on('mouseleave', function(){
         element.remove();
@@ -1258,7 +1258,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 .directive('otherZoneContextMenu', function(){
   return {
     restrict: 'E',
-    templateUrl: '../views/templates/otherZoneContextMenu.html',
+    templateUrl: '../views/templates/boardState/otherZoneContextMenu.html',
     link: function(scope, element, attrs){
       element.on('mouseleave', function(){
         element.remove();

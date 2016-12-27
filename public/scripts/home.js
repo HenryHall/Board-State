@@ -2,7 +2,41 @@ var myApp = angular.module('myApp', []);
 
 
 myApp.controller('homeController', ['$scope', '$http', function($scope, $http){
-  console.log("here");
+
+  //List of partials
+  $scope.tabURL = {
+    main: "../views/templates/home/main.html",
+    quickStart: "../views/templates/home/quickStart.html",
+    about: "../views/templates/home/about.html"
+  };
+
+  //Initialize the page to the 'main' partial
+  $scope.active = 0;
+
+  $scope.tabChange = function(number){
+    switch (number) {
+      case 0:
+        return $scope.tabURL.main;
+        break;
+
+      case 1:
+        return $scope.tabURL.quickStart;
+        break;
+
+      case 2:
+        return $scope.tabURL.about;
+        break;
+
+      default:
+      return $scope.tabURL.main;
+    }
+  }
+
+
+}]);
+
+
+myApp.controller('mainController', ['$scope', '$http', function($scope, $http){
 
   $scope.recentBS = [];
   $scope.popularBS = [];
@@ -29,76 +63,33 @@ myApp.controller('homeController', ['$scope', '$http', function($scope, $http){
 
   });
 
-
-  //DO THIS
-  $scope.tutorialLink = "NotMadeYet";
-
-  // $scope.popularBS = [
-  //   {
-  //     title: 'Tarmogoyf and Lightning Bolt',
-  //     category: 'Rules Question',
-  //     username: 'Day[J]',
-  //     date: '12/14/16'
-  //   },
-  //   {
-  //     title: 'How can I stop this',
-  //     category: 'Rules Question',
-  //     username: 'Comatose',
-  //     date: '12/12/16'
-  //   },
-  //   {
-  //     title: 'I can\'t believe this',
-  //     category: 'Story',
-  //     username: 'Kingler',
-  //     date: '12/13/16'
-  //   },
-  //   {
-  //     title: 'What happens here',
-  //     category: 'Rules Question',
-  //     username: 'Ziggy Stardew',
-  //     date: '12/14/16'
-  //   },
-  //   {
-  //     title: 'Sick decision making',
-  //     category: 'Story',
-  //     username: 'Robo Dick',
-  //     date: '12/8/16'
-  //   }
-  // ];
+}]);
 
 
-  // $scope.recentBS = [
-  //   {
-  //     title: 'Tarmogoyf and Lightning Bolt',
-  //     category: 'Rules Question',
-  //     username: 'Day[J]',
-  //     date: '12/14/16'
-  //   },
-  //   {
-  //     title: 'How can I stop this',
-  //     category: 'Rules Question',
-  //     username: 'Comatose',
-  //     date: '12/14/16'
-  //   },
-  //   {
-  //     title: 'I can\'t believe this',
-  //     category: 'Story',
-  //     username: 'Kingler',
-  //     date: '12/14/16'
-  //   },
-  //   {
-  //     title: 'What happens here',
-  //     category: 'Rules Question',
-  //     username: 'Ziggy Stardew',
-  //     date: '12/14/16'
-  //   },
-  //   {
-  //     title: 'Sick decision making',
-  //     category: 'Story',
-  //     username: 'Robo Dick',
-  //     date: '12/14/16'
-  //   }
-  // ];
+myApp.controller('quickStartController', ['$scope', function($scope){
+
+  //Phyrexian Metamorph
+  $scope.card = {
+    powerToughness: "0/0",
+    style: {
+      'background-color': 'transparent',
+      'background-image': "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=214375&type=card')",
+      'background-size': 'cover',
+      height: '155px',
+      width: '111px'
+    },
+    tapped: false
+  }
+
+  $scope.tapCard = function(){
+    if ($scope.card.tapped == true) {
+      $scope.card.tapped = false;
+      document.getElementById('displayCard').removeClass('tapped');
+    } else {
+      $scope.card.tapped = true;
+      document.getElementById('displayCard').addClass('tapped');
+    }
+  }
 
 
 }]);

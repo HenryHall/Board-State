@@ -27,135 +27,18 @@
 
     <div id="mainContent" ng-controller="homeController">
 
-      <div class="flexItemMain">
+      <nav class="navbar navbar-inverse">
+        <div class="containter-fluid">
+          <ul class="nav navbar-nav nav-justified">
+            <li role="presentation" ng-click="active = 0"><a href="#">Home</a></li>
+            <li role="presentation"><a href="/new">New Board State</a></li>
+            <li role="presentation" ng-click="active = 1"><a href="#">Quick Start</a></li>
+            <li role="presentation" ng-click="active = 2"><a href="#">About</a></li>
+          </ul>
+        </div>
+      </nav>
 
-        <section>
-          <h2>Welcome
-            <br/>
-            <small>Thank you for using Board State</small>
-          </h2>
-          <div class="btn-container" style="display: flex">
-            <div style="width: 50%">
-              <a class="btn btn-primary btn-lg" href="/new">New Board State</a>
-            </div>
-            <div style="width: 50%">
-              <a class="btn btn-info btn-lg" href="/{{tutorialLink}}">Learn More</a>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h2>News</h2>
-          <p>
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-          </p>
-          <p>
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-          </p>
-          <p>
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-          </p>
-          <p>
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-            This is a paragraph where I will put news about Board State and other Magic: the Gathering related news.
-          </p>
-        </section>
-
-        <section>
-          <h2>Contact Us</h2>
-          <p>Questions, comments or want to share something cool?  You can get in contact with us at any of these options!</p>
-        </section>
-
-
-      </div>
-
-      <div class="flexItemSide">
-
-        <section>
-          <h2>Board State of the Day</h2>
-          <p>This is a quick description of what today's Board State will be.  Hopefully it will be an interesting one, but I don't know yet since I haven't made it yet</p>
-          <div class="btn-container">
-            <button class="btn btn-primary btn-lg">Check it out!</button>
-          </div>
-          <div style="text-align: center"><small><a href="#">Submit</a> a Board State to be featured!</small></div>
-        </section>
-
-        <section>
-          <h2>Popular Board States</h2>
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <title>Popular Board States</title>
-              <thead>
-                <th>Category</th>
-                <th>Username</th>
-                <th>Date</th>
-              </thead>
-              <tr ng-repeat="popular in popularBS">
-                <td colspan="3">
-                  <a href="{{url}}{{popular.hash}}">
-                    <table class="table">
-                      <tr>
-                        <td colspan="3" class="tableTitle">
-                          <strong>{{popular.title}}</strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="trContent">{{popular.category}}</td>
-                        <td class="trContent">{{popular.username}}</td>
-                        <td class="trContent">{{popular.date | date:'shortDate'}}</td>
-                      </tr>
-                    </table>
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </section>
-
-        <section>
-          <h2>Recent Board States</h2>
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <title>Popular Board States</title>
-              <thead>
-                <th>Category</th>
-                <th>Username</th>
-                <th>Date</th>
-              </thead>
-              <tr ng-repeat="recent in recentBS">
-                <td colspan="3">
-                  <a href="{{url}}{{recent.hash}}">
-                    <table class="table">
-                      <tr>
-                        <td colspan="3" class="tableTitle">
-                          <strong>{{recent.title}}</strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="trContent">{{recent.category}}</td>
-                        <td class="trContent">{{recent.username}}</td>
-                        <td class="trContent">{{recent.date | date:'shortDate'}}</td>
-                      </tr>
-                    </table>
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </section>
-
-      </div>
+      <ng-include src="tabChange(active)"></ng-include>
 
 
     </div>

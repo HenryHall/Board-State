@@ -1,0 +1,86 @@
+
+<div id="quickStart" ng-controller="quickStartController">
+
+  <section>
+
+    <h2>How to use Board State like a pro!</h2>
+
+    <h3>Step 1: <small>Adding Cards to the Game Board</small></h3>
+
+    <div class="flexDiv">
+      <div ng-include="'../views/templates/boardState/cardPortal.html'"></div>
+
+      <div class="paragraph">To add cards to your Board State, locate the Card Portal and start typing the name of the card you would like to display.  Suggestions will start to populate in a drop-down and can be selected from there.  The cards will always appear under the Card Portal, which can be moved around the screen to a position of your liking.</div>
+    </div>
+
+    <div class="flexDiv">
+
+      <div>
+        <div
+        id="displayCard"
+        class="createdCard"
+        ng-style="card.style"
+        carddraggable
+        ng-dblclick="tapCard()"
+        ng-class="{'tapped': card.tapped}"
+        contextmenurightclick
+        data-toplocation="{{card.style.top}}"
+        data-leftlocation="{{card.style.left}}"
+        >
+          <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
+          <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
+          <span ng-if="card.loyalty" class="loyalty">{{card.loyalty}}</span>
+          <span class="redCounter" ng-if="card.redCounters">{{card.redCounters}}</span>
+          <span class="blueCounter" ng-if="card.blueCounters">{{card.blueCounters}}</span>
+        </div>
+      </div>
+
+      <div>
+        <img id="contextMenuImage" src="../images/contextMenu.png" alt="Context Menu Example">
+      </div>
+
+      <div class="paragraph">
+        Cards are draggable as well but can be manipulated in several other ways too:
+        <ul>
+          <li>Double clicking them will tap the card.</li>
+          <li>Right clicking will bring up a context menu with many more options depending on the card's type.</li>
+          <li>Clicking <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> will remove the card from the game board.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <h3>Step 2: <small>Setting Additional Game Information</small></h3>
+
+    <div class="flexDiv">
+      <div>
+        <img id="gameStatsImage" src="../images/gameStats.png" alt="Game Stats">
+      </div>
+
+      <div class="paragraph">
+        If you would like, you can display any information you would like about the current state.
+        <ul>
+          <li>Right/left clicking life totals will increase/decrease them.</li>
+          <li>Clicking a 'zone' in a player's stats area will open a panel where you can add cards to that zone.</li>
+          <li>The Stack is a zone where cards can be added to show what spells are currently resolving.</li>
+          <li>On the right side of the screen, the
+            <button id="gameBoardUibutton" class="btn btn-default" title="Show/Hide Description">
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            </button>
+            button will toggle a panel where you can write a description for the current state.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Step 3: <small>Saving and Navigating Your States</small></h3>
+
+    <div class="flexDiv">
+      Something Here
+    </div>
+
+
+  </section>
+
+
+</div>
