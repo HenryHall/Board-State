@@ -96,9 +96,20 @@ body {
 }
 
 #gameStats section {
-  height: 50vh;
+  height: 47.5vh;
   min-height: 250px;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#gameStats h2 {
+  margin-top: 0px;
+}
+
+#theStack {
+  height: 5vh;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #opponent {
@@ -347,15 +358,16 @@ body {
 }
 
 .alertToast {
-  position: relative;
+  position: absolute;
   z-index: 3000;
   width: 50%;
   top: 20px;
   left: 25vw;
+  margin: 5px;
   font-size: 2em;
   text-align: center;
   border-radius: 15px;
-  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
   word-wrap: break-word;
   overflow: hidden;
 }

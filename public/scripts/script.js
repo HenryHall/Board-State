@@ -31,6 +31,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
       exile: [],
       library: []
     },
+    stack: [],
     description: ""
   };
 
@@ -231,7 +232,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
     switch (newToast.type.toLowerCase()) {
       case 'success':
         newStyle = {
-          'background-color': 'rgba(223, 240, 216, .75)',
+          'background-color': 'rgb(223, 240, 216)',
           color: '#3c763d',
           border: '2px solid #d6e9c6'
         };
@@ -239,7 +240,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
       case 'info':
         newStyle = {
-          'background-color': 'rgba(218, 237, 247, .75)',
+          'background-color': 'rgb(218, 237, 247)',
           color: '#31708f',
           border: '2px solid #bce8f1'
         };
@@ -247,7 +248,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
       case 'warning':
         newStyle = {
-          'background-color': 'rgba(252, 248, 227, .75)',
+          'background-color': 'rgb(252, 248, 227)',
           color: '#8a6d3b',
           border: '2px solid #faebcc'
         };
@@ -256,7 +257,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
       case 'danger':
         newStyle = {
-          'background-color': 'rgba(242, 222, 222, .75)',
+          'background-color': 'rgb(242, 222, 222)',
           color: '#a94442',
           border: '2px solid #ebccd1'
         };
@@ -847,7 +848,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
     document.getElementById('otherZoneSuggestions').style.display = "block";
 
     var keyPress = event.which;
-    console.log(event.which);
     var suggestions = document.querySelectorAll('.otherZonesSuggestion a');
 
     var index = -1;
@@ -856,7 +856,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
         index = i;
       }
     }
-    console.log(index);
 
     if (suggestions.length !== 0){
 
@@ -957,6 +956,8 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
       }
 
+    } else if (player == "The"){
+      $scope.currentZoneCards = $scope.gameStats.stack;
     }
 
     //Position the array properly
@@ -1047,6 +1048,10 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
           console.log("That is not a propper zone.");
 
       }
+
+    } else if ($scope.currentPlayer == "The"){
+
+      $scope.gameStats.stack.push(newCardElement);
 
     } else {
       console.log("How the hell did you get here?");

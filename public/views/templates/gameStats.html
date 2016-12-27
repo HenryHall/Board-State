@@ -73,6 +73,12 @@
 
   <div id="gameStats">
 
+    <div id="theStack" class="gameStatsMenuItem" ng-click="viewZone('The', 'Stack')">
+      <strong>
+        THE STACK <span class="badge" ng-if="gameStats.stack.length != 0">{{gameStats.stack.length}}</span>
+      </strong>
+    </div>
+
     <section id="opponent">
 
       <h2 style="text-align: center">Player 2</h2>
