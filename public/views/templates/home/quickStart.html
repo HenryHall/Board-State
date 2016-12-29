@@ -3,84 +3,236 @@
 
   <section>
 
-    <h2>How to use Board State like a pro!</h2>
+    <h2>Using Board State like a pro!</h2>
 
-    <h3>Step 1: <small>Adding Cards to the Game Board</small></h3>
+    Every tool listed here is interactive.  Feel free to try them out here first!
 
     <div class="flexDiv">
-      <div ng-include="'../views/templates/boardState/cardPortal.html'"></div>
+      <div id="cardPortalCradle" class="item">
+        <card-portal></card-portal>
+      </div>
 
-      <div class="paragraph">To add cards to your Board State, locate the Card Portal and start typing the name of the card you would like to display.  Suggestions will start to populate in a drop-down and can be selected from there.  The cards will always appear under the Card Portal, which can be moved around the screen to a position of your liking.</div>
+      <div class="description">
+        <h3>Step 1: <small>Adding cards to the game board</small></h3>
+
+        Locate the Card Portal and start typing the name of a card.  Suggestions will start to populate in a drop-down and can be selected from there.  Cards will always appear under the Card Portal (except here), which is draggable.
+      </div>
     </div>
 
     <div class="flexDiv">
 
-      <div>
-        <div
-        id="displayCard"
-        class="createdCard"
-        ng-style="card.style"
-        carddraggable
-        ng-dblclick="tapCard()"
-        ng-class="{'tapped': card.tapped}"
-        contextmenurightclick
-        data-toplocation="{{card.style.top}}"
-        data-leftlocation="{{card.style.left}}"
-        >
-          <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
-          <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
-          <span ng-if="card.loyalty" class="loyalty">{{card.loyalty}}</span>
-          <span class="redCounter" ng-if="card.redCounters">{{card.redCounters}}</span>
-          <span class="blueCounter" ng-if="card.blueCounters">{{card.blueCounters}}</span>
+      <div class="item">
+        <div id="createdCardCradle">
+          <div
+          class="createdCard"
+          ng-repeat="card in createdCardArray"
+          ng-style="card.style"
+          carddraggable
+          ng-dblclick="tapCard(card)"
+          ng-class="{'tapped': card.tapped}"
+          contextmenurightclick
+          data-index="{{$index}}"
+          data-toplocation="{{card.style.top}}"
+          data-leftlocation="{{card.style.left}}"
+          >
+            <button class="removeCard" ng-click="removeCard($index)"><strong> <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></strong></button>
+            <span ng-if="card.powerToughness" class="powerToughness">{{card.powerToughness}}</span>
+            <span ng-if="card.loyalty" class="loyalty">{{card.loyalty}}</span>
+            <span class="redCounter" ng-if="card.redCounters">{{card.redCounters}}</span>
+            <span class="blueCounter" ng-if="card.blueCounters">{{card.blueCounters}}</span>
+          </div>
         </div>
       </div>
 
-      <div>
-        <img id="contextMenuImage" src="../images/contextMenu.png" alt="Context Menu Example">
-      </div>
-
-      <div class="paragraph">
-        Cards are draggable as well but can be manipulated in several other ways too:
+      <div class="description">
+        Cards are draggable as well and can be manipulated in several other ways:
         <ul>
-          <li>Double clicking them will tap the card.</li>
-          <li>Right clicking will bring up a context menu with many more options depending on the card's type.</li>
-          <li>Clicking <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> will remove the card from the game board.</li>
+          <li><b>Double click</b> to tap a card.</li>
+          <li><b>Right click</b> will bring up a context menu with many options depending on a card's type.</li>
+          <li><b>Click <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></b> to remove the card from the game board.</li>
         </ul>
       </div>
 
     </div>
 
-    <h3>Step 2: <small>Setting Additional Game Information</small></h3>
 
     <div class="flexDiv">
-      <div>
-        <img id="gameStatsImage" src="../images/gameStats.png" alt="Game Stats">
+      <div class="item">
+        <section id="playerStats">
+
+          <h2 style="text-align: center">Player 1</h2>
+
+          <div id="playerLife" ng-click="incrementLife()" ng-right-click="decrementLife()">
+            {{playerLife}}
+          </div>
+
+          <div class="gameStatsMenuItem">
+            Library
+          </div>
+          <div class="gameStatsMenuItem">
+            Hand
+          </div>
+          <div class="gameStatsMenuItem">
+            Graveyard
+          </div>
+          <div class="gameStatsMenuItem">
+            Exile
+          </div>
+
+          <hr />
+          <div class="gameStatsMenuItem">
+            THE STACK
+          </div>
+
+        </section>
       </div>
 
-      <div class="paragraph">
-        If you would like, you can display any information you would like about the current state.
+      <div class="description">
+        <h3>Step 2: <small>Setting additional game information</small></h3>
+
+        Additional information about the Board State is displayed on the left side of the screen.
         <ul>
-          <li>Right/left clicking life totals will increase/decrease them.</li>
-          <li>Clicking a 'zone' in a player's stats area will open a panel where you can add cards to that zone.</li>
-          <li>The Stack is a zone where cards can be added to show what spells are currently resolving.</li>
-          <li>On the right side of the screen, the
-            <button id="gameBoardUibutton" class="btn btn-default" title="Show/Hide Description">
-              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-            </button>
-            button will toggle a panel where you can write a description for the current state.
+          <li><b>Right/left click</b> life totals to increase/decrease them.</li>
+          <li>Each 'zone' has a panel that opens where you can add cards to that zone. (Not available in quick start)</li>
+          <li>The Stack is a zone where cards can be added to show what spells are currently resolving. (Sorry, only spells currently)</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="flexDiv">
+      <div class="item" style="transform: scale({{elementScale}})">
+        <ng-include src="'../views/templates/boardState/gameBoardUi.html'"></ng-include>
+      </div>
+
+      <div class="description">
+        <h3>Step 3: <small>Saving and Navigating Your States</small></h3>
+
+        Once your state is finished, the toolbar on the right side of the screen will let you save and finish.
+        <ul class="step3Ul">
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - The floppy disk will save the current state you are working on.
+            </div>
           </li>
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - Use these arrows to navigate between the states you have created.  The current state is outlined between the arrows, along with the previous and next state.  A "-" indicates no previous state and "N" indicates a new state that has not yet been created.
+            </div>
+          </li>
+
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - Once you have finished working on each state, you can upload your Board State.  After entering in some information about the Board State a link will be provided to share with others.
+            </div>
+          </li>
+
+        </ul>
+        Other Tools:
+        <ul class="step3Ul">
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - Return to Board State's homepage.
+            </div>
+          </li>
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - Clear the game board.  This will remove every card that has been created in the current state and cannot be undone.
+            </div>
+          </li>
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - The zoom in and zoom out buttons will give you a larger or smaller view of the game board.  The current zoom level is displayed in between.
+            </div>
+          </li>
+
+          <li>
+            <div class="buttonItem">
+              <button class="btn btn-default"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></button>
+            </div>
+            <div class="buttonDescription">
+              - This button will open a panel where you can write a description for the current state (Not available in quick start).  Each state will have a separate description available.  When a Board State is shared and a state is loaded where a description has been written, the panel will automatically open.  Clicking it a second time will close the panel.
+            </div>
+          </li>
+
         </ul>
       </div>
-    </div>
 
-    <h3>Step 3: <small>Saving and Navigating Your States</small></h3>
+    </div>
 
     <div class="flexDiv">
-      Something Here
-    </div>
 
+      <div class="item" style="margin-top: 30px;">
+        <div style="width: 175px; margin: auto;">
+          <a class="btn btn-lg btn-primary" href="/new">New Board State</a>
+        </div>
+      </div>
+
+      <div class="description">
+        <h3>Thats all there is to it!</h3>
+        Now you are ready to make your own Board State!
+      </div>
+
+    </div>
 
   </section>
 
+  <div id="inspectModal" ng-click="closeInspect()">
+    <div id="inspectCardImage"></div>
+    <div id="inspectCardInfo">
+      <h2>{{inspectModalInfo.name}} <small style="float: right">{{inspectModalInfo.manaCost}}</small></h2>
+      <strong>
+        {{inspectModalInfo.type}}
+        <span id="inspectModalPrintingHover">{{inspectModalInfo.printings[0]}}</span>
+        <div id="inspectModalPrintings">
+          <h3>All Printings:</h3>
+          <div ng-repeat="printing in inspectModalInfo.printings">
+            {{printing}}
+            <br />
+          </div>
+        </div>
+      </strong>
+      <br>
+      <div id="inspectModalText">{{fixInspectText(inspectModalInfo.text)}}</div>
+      <br>
+
+      <span
+      ng-if="inspectModalInfo.type.indexOf('Creature') != -1 || inspectModalInfo.type.indexOf('Vehicle') != -1"
+      style="float: right">
+        ({{inspectModalInfo.power}}/{{inspectModalInfo.toughness}})
+      </span>
+
+      <span
+      ng-if="inspectModalInfo.type.indexOf('Planeswalker') != -1"
+      style="float: right">
+      ({{inspectModalInfo.loyalty}})
+      </span>
+
+    </div>
+  </div>
 
 </div>

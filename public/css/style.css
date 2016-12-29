@@ -8,6 +8,11 @@ body {
   background-size: 250px;
 }
 
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #uiElements {
   position: fixed;
   height: 100vh;
@@ -302,6 +307,7 @@ body {
 
 #inspectModalText {
   white-space: pre-wrap;
+  font-size: 1.25em;
 }
 
 #saveBox, #infoModalBox {
@@ -386,7 +392,7 @@ body {
 }
 
 .createdCard .removeCard {
-  position: absolute;;
+  position: absolute;
   bottom: 0%;
   border: none;
   border-radius: 3px;
