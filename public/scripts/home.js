@@ -12,7 +12,7 @@ myApp.controller('homeController', ['$scope', '$http', function($scope, $http){
   };
 
   //Initialize the page to the 'main' partial
-  $scope.active = 0;
+  $scope.active = 1;
 
   $scope.tabChange = function(number){
     switch (number) {
@@ -397,9 +397,9 @@ myApp.controller('quickStartController', ['$scope', '$http', '$window',  functio
     $scope.playerLife--;
   };
 
-  $scope.goHome = function(){
-    $scope.$parent.active = 0;
-  };
+  // $scope.goHome = function(){
+  //   $scope.$parent.active = 0;
+  // };
 
   $scope.clearBoard = function(){
     var confirmClear;
