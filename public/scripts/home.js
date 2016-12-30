@@ -58,7 +58,7 @@ myApp.controller('mainController', ['$scope', '$http', function($scope, $http){
     }
 
     for (var i=0; i<data.popular.length; i++){
-      data.popular[i].info.hash = data.popular.hashed_id;
+      data.popular[i].info.hash = data.popular[i].hashed_id;
       $scope.popularBS.push(data.popular[i].info);
     }
 
