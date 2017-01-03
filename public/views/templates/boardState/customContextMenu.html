@@ -15,6 +15,20 @@ ng-mouseleave="removeContextMenu($event)">
   Inspect</li>
 
   <li
+  ng-if="card.info.variant"
+  ng-mouseover="showVariants(card)"
+  >
+
+  <ul id="cardVariants">
+    <li ng-repeat="variant in card.info.variant">
+      {{variant.name}} | {{variant.set}}
+      <span ng-if="variant.power"> | ({{variant.power}}/{{variant.toughness}})</span>
+    </li>
+  </ul>
+
+  Change Variant</li>
+
+  <li
   ng-if="card.info.type.indexOf('Creature') != -1 || card.info.type.indexOf('Vehicle') != -1"
   ng-click="setPT($index)">
   Set Power/Toughness</li>

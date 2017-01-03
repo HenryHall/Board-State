@@ -517,21 +517,31 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
     var foundCard;
     for(var i in $scope.allSets){
       for(var j=0; j<$scope.allSets[i].cards.length; j++){
+
+        //Skip mtgjson tokens since we made our own
+        if ($scope.allSets[i].cards[j].layout == "token") {
+          continue;
+        }
+
         if($scope.allSets[i].cards[j].name.toLowerCase() == cardName.toLowerCase()){
           //Check to see if the image can be loaded
           if($scope.allSets[i].cards[j].multiverseid || $scope.allSets[i].cards[j].picURL){
 
             //Check to see if this is a variant
-            if (foundCard != undefined && i != 'Tokens'){
-
+            if (foundCard != undefined){
               //It is
+
               if (!foundCard.variant){
+                //First Variant
                 foundCard.variant = [];
               }
-              foundCard.variant.push($scope.allSets[i].cards[j]);
+              var newVariant = $scope.allSets[i].cards[j];
+              newVariant.set = i;
+              foundCard.variant.push(newVariant);
 
             } else {
               foundCard = $scope.allSets[i].cards[j];
+              foundCard.set = i;
             }
 
           } else {
@@ -575,13 +585,19 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
     newCard.tapped = false;
 
     newCard.style = {
-      "background-image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
       "background-size": "cover",
       "background-color": "trasnparent",
       height: '155px',
       width: '111px',
       'z-index': 100
     };
+
+    //Set the image for tokens and non-tokens
+    if (cardInfo.picURL) {
+      newCard.style["background-image"] = "url('" + cardInfo.picURL + "')";
+    } else if (cardInfo.multiverseid) {
+      newCard.style["background-image"] = "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')";
+    }
 
 
     if(cardInfo.layout == "double-faced"){
@@ -611,7 +627,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
 
 
-    if(cardInfo.types.indexOf("Creature") != -1) {
+    if(cardInfo.type.indexOf("Creature") != -1) {
       newCard.powerToughness = cardInfo.power + "/" + cardInfo.toughness;
       newCard.types = cardInfo.types;
     } else {
@@ -690,7 +706,11 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
   $scope.inspectCard = function(card){
     $scope.inspectModalInfo = card.info;
     document.getElementById('inspectModal').style.display = 'block';
-    document.getElementById('inspectCardImage').style.backgroundImage = card.style['background-image'];
+    if (card.info.picURL){
+      document.getElementById('inspectCardImage').style.backgroundImage = "url('" + card.info.picURL + "')";
+    } else {
+      document.getElementById('inspectCardImage').style.backgroundImage = card.style['background-image'];
+    }
   };
 
 
