@@ -111,19 +111,29 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
     console.log($scope.allSets);
 
     //Load tokens and add to allSets under 'Tokens'
+    $http({
+      method: 'GET',
+      url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/tokens.json'
+    })
+    .then(function(data){
+      $scope.allSets.tokens = {};
+      $scope.allSets.tokens.cards = data.data;
 
-    //Create suggestion array
-    $scope.allCardNames = [];
-    for (set in $scope.allSets){
-      for (var i=0; i<$scope.allSets[set].cards.length; i++){
-        $scope.allCardNames.push($scope.allSets[set].cards[i].name);
+      //Create suggestion array
+      $scope.allCardNames = [];
+      for (set in $scope.allSets){
+        for (var i=0; i<$scope.allSets[set].cards.length; i++){
+          $scope.allCardNames.push($scope.allSets[set].cards[i].name);
+        }
       }
-    }
 
-    //cardPortalInput is now ready to be used
-    document.getElementById('cardPortalInput').removeAttribute("readonly");
+      //cardPortalInput is now ready to be used
+      document.getElementById('cardPortalInput').removeAttribute("readonly");
 
-    toast({type: "Success", message: "Card Data Successfuly Loaded!", duration: 3});
+      toast({type: "Success", message: "Card Data Successfuly Loaded!", duration: 3});
+
+    });
+
 
   });
 
@@ -509,7 +519,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
       for(var j=0; j<$scope.allSets[i].cards.length; j++){
         if($scope.allSets[i].cards[j].name.toLowerCase() == cardName.toLowerCase()){
           //Check to see if the image can be loaded
-          if($scope.allSets[i].cards[j].multiverseid){
+          if($scope.allSets[i].cards[j].multiverseid || $scope.allSets[i].cards[j].picURL){
 
             //Check to see if this is a variant
             if (foundCard != undefined && i != 'Tokens'){
