@@ -103,13 +103,14 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
   toast({type: "Warning", message: "Loading Card Data...", duration: 5});
   $http({
     method: 'GET',
-    // url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
-    url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets-x.json'
-    // url: '/cardData'
+    url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets.json'
+    // url: 'https://raw.githubusercontent.com/HenryHall/Board-State/master/public/JSon/AllSets-x.json'
   })
   .then(function(data){
     $scope.allSets = data.data;
     console.log($scope.allSets);
+
+    //Load tokens and add to allSets under 'Tokens'
 
     //Create suggestion array
     $scope.allCardNames = [];
@@ -503,20 +504,33 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
 
   function findCard(cardName){
+    var foundCard;
     for(var i in $scope.allSets){
       for(var j=0; j<$scope.allSets[i].cards.length; j++){
         if($scope.allSets[i].cards[j].name.toLowerCase() == cardName.toLowerCase()){
           //Check to see if the image can be loaded
           if($scope.allSets[i].cards[j].multiverseid){
-            var foundCard = $scope.allSets[i].cards[j];
-            return foundCard;
+
+            //Check to see if this is a variant
+            if (foundCard != undefined && i != 'Tokens'){
+
+              //It is
+              if (!foundCard.variant){
+                foundCard.variant = [];
+              }
+              foundCard.variant.push($scope.allSets[i].cards[j]);
+
+            } else {
+              foundCard = $scope.allSets[i].cards[j];
+            }
+
           } else {
             console.log("No Image was found for this card, will continue looking.");
           }
         }
       }
     }
-    return undefined;
+    return foundCard;
   }
 
 
@@ -543,26 +557,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
   };
 
 
-  function getCardInfo(card){
-
-    for(var i in $scope.allSets){
-      for(var j=0; j<$scope.allSets[i].cards.length; j++){
-        if($scope.allSets[i].cards[j].name.toLowerCase() == card.toLowerCase()){
-          //Check to see if the image can be loaded
-          if($scope.allSets[i].cards[j].multiverseid){
-            // console.log($scope.allSets[i].cards[j]);
-            return $scope.allSets[i].cards[j];
-          } else {
-            console.log("No Image was found for this card, will continue looking.");
-          }
-        }
-      }
-    }
-    return console.log("No card with that name found.");
-
-  }
-
-
   function createNewCardElement(cardInfo){
     var newCard = {};
 
@@ -582,7 +576,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
     if(cardInfo.layout == "double-faced"){
       newCard.night = {};
-      newCard.night.info = getCardInfo(newCard.info.names[1]);
+      newCard.night.info = findCard(newCard.info.names[1]);
       newCard.night.uniqueID = $scope.uniqueID;
       newCard.night.style = {
         "background-image": "url('http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + cardInfo.multiverseid + "&type=card')",
