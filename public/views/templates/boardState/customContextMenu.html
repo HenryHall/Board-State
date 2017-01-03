@@ -6,7 +6,6 @@
 <hr style="margin: 5px">
 
 <ul
-id="customContextMenu"
 ng-mouseleave="removeContextMenu($event)">
 
   <li
@@ -15,18 +14,19 @@ ng-mouseleave="removeContextMenu($event)">
   Inspect</li>
 
   <li
+  id="variantHoverZone"
   ng-if="card.info.variant"
-  ng-mouseover="showVariants(card)"
+  ng-mouseover="positionVariants()"
   >
-
+  Change Variant</li>
   <ul id="cardVariants">
-    <li ng-repeat="variant in card.info.variant">
+    <li ng-repeat="variant in card.info.variant" ng-click="chooseVariant(card, $index, $parent.$index)">
       {{variant.name}} | {{variant.set}}
       <span ng-if="variant.power"> | ({{variant.power}}/{{variant.toughness}})</span>
+      <span ng-if="variant.text"> | {{variant.text}}</span>
     </li>
   </ul>
 
-  Change Variant</li>
 
   <li
   ng-if="card.info.type.indexOf('Creature') != -1 || card.info.type.indexOf('Vehicle') != -1"

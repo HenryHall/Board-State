@@ -468,3 +468,21 @@ hr {
 .customContextMenu ul li:hover {
   background-color: rgb(199, 199, 199);
 }
+
+#cardVariants {
+  display: none;
+  position: absolute;
+  background-color: rgb(221, 221, 221);
+  border: 1px solid rgb(59, 59, 59);
+  border-radius: 3px;
+  box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.75);
+  padding: 5px;
+  width: auto;
+  height: 200px;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+#variantHoverZone:hover + #cardVariants, #cardVariants:hover {
+  display: block;
+}

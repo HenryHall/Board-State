@@ -735,6 +735,43 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
   };
 
 
+  $scope.positionVariants = function(){
+    console.log("Here");
+    //Set the position of #cardVariants
+    var variantHoverZone = document.getElementById('variantHoverZone').getBoundingClientRect();
+    console.log(variantHoverZone);
+    var cardVariants = document.getElementById('cardVariants');
+    // cardVariants.style.top = -variantHoverZone.height + 'px';
+    console.log(cardVariants.getBoundingClientRect().top);
+
+    cardVariants.style.top = (3 * variantHoverZone.height) + 'px';
+    cardVariants.style.left = variantHoverZone.width + 20 + 'px';
+
+  };
+
+
+  $scope.chooseVariant = function(card, index, parentIndex){
+    //Set the selected variant
+    var newVariant = createNewCardElement(card.info.variant[index]);
+
+    // console.log(card.info.variant);
+    //
+    // card.info.variant.splice(index, 1);
+    // card.info.variant.push(card.info);
+    // console.log(card.info.variant);
+    // delete card.info.variant[card.info.variant.length - 1].variant;
+    //
+    // console.log(card.info);
+    // newVariant.info.variant = card.info.variant;
+
+    $scope.createdCardArray.splice(parentIndex, 1);
+    $scope.createdCardArray.push(newVariant);
+
+
+
+  };
+
+
   $scope.setPT = function(index){
     var newPT = prompt("Set a new power and toughness.  Keep blank to return to default.", $scope.createdCardArray[index].powerToughness);
 
