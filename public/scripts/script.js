@@ -1378,8 +1378,29 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
         //calculate where the card portal is
         var cardPortal = document.getElementById('cardPortal').style;
-        var y = parseInt(cardPortal.top) + 125/currentZoom;
-        var x = parseInt(cardPortal.left) + 45/currentZoom;
+
+        var allCards = [].slice.call(document.querySelectorAll('.createdCard'));
+
+        function cardPortalCheck(cardCount, cardArray){
+
+          //calculate how many cards are under the card portal
+          for (var i=0; i<cardArray.length; i++){
+            if (parseInt(cardArray[i].style.top) == parseInt(cardPortal.top) + 125/currentZoom + (25*cardCount) && parseInt(cardArray[i].style.left) == parseInt(cardPortal.left) + 45/currentZoom + (25*cardCount)){
+              cardArray.splice(i, 1);
+              cardCount++;
+              return cardPortalCheck(cardCount, cardArray);
+            }
+          }
+          return cardCount;
+
+        }
+
+        var cardCount = cardPortalCheck(0, allCards);
+
+        //cardPortal position + offset + offset for additional cards
+        var y = parseInt(cardPortal.top) + 125/currentZoom + (25*cardCount);
+        var x = parseInt(cardPortal.left) + 45/currentZoom + (25*cardCount);
+
         element.css({
           top: y + 'px',
           left: x + 'px'
