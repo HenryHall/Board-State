@@ -12,6 +12,7 @@ var BoardState = require('./boardstate_model.js');
 
 router.post('/', function(req, res){
   console.log("In /saveStates");
+  console.log(req.body);
 
     var newStates = new BoardState({
       allStates: req.body.allStates,

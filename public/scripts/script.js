@@ -183,7 +183,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
       $scope.createdCardArray[currentIndex].positionPercent = {};
       $scope.createdCardArray[currentIndex].positionPercent.top = parseInt(allCreatedCards[i].style.top) * 100 / (gameBoard.offsetHeight) + '%';
       $scope.createdCardArray[currentIndex].positionPercent.left = parseInt(allCreatedCards[i].style.left) * 100 / (gameBoard.offsetWidth) + '%';
-
     }
 
 
@@ -337,6 +336,16 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
       return;
     }
 
+    //Remove the variants from cards, otherwise file size is massive
+    for (var i=0; i<$scope.states.length; i++){
+      for (var j=0; j<$scope.states[i].createdCardArray.length; j++){
+        var currentCard = $scope.states[i].createdCardArray[j];
+        if (currentCard.info.variant){
+          delete currentCard.info.variant;
+        }
+      }
+    }
+
     var newData = {
       allStates: $scope.states,
       info: {
@@ -346,6 +355,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
         description: $scope.bStateDescription
       }
     }
+
 
     $http({
       method: 'POST',

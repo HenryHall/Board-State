@@ -2,11 +2,11 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var urlencodedParser=bodyParser.urlencoded( { extended: false } );
+var urlencodedParser=bodyParser.urlencoded( { extended: false, limit: '5mb' } );
 
 var db = require('../server/modules/connection.js');
 
-app.use( bodyParser.json() );
+app.use( bodyParser.json({limit: '5mb'}) );
 app.use( express.static( 'public' ) );
 
 
