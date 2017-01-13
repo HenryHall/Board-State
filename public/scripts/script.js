@@ -444,6 +444,22 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
   $scope.nextState = function(){
 
+    //If this is a loaded Board State, and the next state doesn't exist
+    if ($scope.uploadString){
+      //Had an unloadString, was a loaded BS
+      for (var i=0; i<$scope.states.length; i++){
+        //See if the next state exists
+        if ($scope.states[i].stateNumber == $scope.currentState + 1) {
+          //It did exist
+          break;
+        }
+      }
+      //It did not exist
+      var nextState = $scope.currentState + 1;
+      toast({type: 'warning', message: "There is no state " + nextState + "!", duration: 3});
+      return;
+    }
+
     //Make sure the state is saved
     isStateSaved();
 
@@ -501,7 +517,11 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
 
   $scope.getNextState = function(){
     if ($scope.currentState + 1 > $scope.states.length){
-      return "N";
+      if ($scope.uploadString){
+        return "-"
+      } else {
+        return "N";
+      }
     } else {
       return ($scope.currentState + 1);
     }
