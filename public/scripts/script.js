@@ -74,7 +74,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
         //Save the state
         $scope.createdCardArray = $scope.states[i].createdCardArray;
         $scope.gameStats = $scope.states[i].gameStats;
-        $scope.currentState = $scope.states[i].stateNumber;
+        //$scope.currentState = $scope.states[i].stateNumber;
         $scope.saveState();
       }
 
