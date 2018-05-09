@@ -82,6 +82,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
         if ($scope.states[i].stateNumber == 1) {
           //load first state
           console.log("Loading state");
+          console.log($scope.states[i]);
           $scope.createdCardArray = $scope.states[i].createdCardArray;
           $scope.gameStats = $scope.states[i].gameStats;
           $scope.currentState = $scope.states[i].stateNumber;
