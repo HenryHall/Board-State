@@ -74,7 +74,7 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
         //Save the state
         $scope.createdCardArray = $scope.states[i].createdCardArray;
         $scope.gameStats = $scope.states[i].gameStats;
-        //$scope.currentState = $scope.states[i].stateNumber;
+        $scope.currentState = $scope.states[i].stateNumber;
         $scope.saveState();
       }
 
@@ -82,7 +82,6 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
         if ($scope.states[i].stateNumber == 1) {
           //load first state
           console.log("Loading state");
-          console.log($scope.states[i]);
           $scope.createdCardArray = $scope.states[i].createdCardArray;
           $scope.gameStats = $scope.states[i].gameStats;
           $scope.currentState = $scope.states[i].stateNumber;
@@ -448,17 +447,21 @@ myApp.controller('createCardController', ['$scope', '$http', '$location', '$wind
     //If this is a loaded Board State, and the next state doesn't exist
     if ($scope.uploadString){
       //Had an unloadString, was a loaded BS
+      var foundNextState;
       for (var i=0; i<$scope.states.length; i++){
         //See if the next state exists
         if ($scope.states[i].stateNumber == $scope.currentState + 1) {
           //It did exist
+          foundNextState = true;
           break;
         }
       }
       //It did not exist
-      var nextState = $scope.currentState + 1;
-      toast({type: 'warning', message: "There is no state " + nextState + "!", duration: 3});
-      return;
+      if(!foundNextState){
+        var nextState = $scope.currentState + 1;
+        toast({type: 'warning', message: "There is no state " + nextState + "!", duration: 3});
+        return;
+      }
     }
 
     //Make sure the state is saved
